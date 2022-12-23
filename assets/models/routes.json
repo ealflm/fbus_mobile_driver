@@ -1,0 +1,80 @@
+{
+  "statusCode": 200,
+  "message": "Lấy danh sách thành công",
+  "body": [
+    {
+      "routeId": "bf9dd13e-9875-4164-bdc0-860f09db2dd1",
+      "name": "Tuyến só 5",
+      "distance": 1437.4,
+      "totalStation": 4,
+      "stationList": [
+        {
+          "stationId": "c76024e2-4134-4daa-86b0-b64b741e1edc",
+          "name": "THPT Nguyễn Huệ",
+          "address": "149 Nguyễn Văn Tăng, Long Thạnh Mỹ, Thành Phố Thủ Đức",
+          "longitude": 106.8181206,
+          "latitude": 10.8444312,
+          "status": 1
+        },
+        {
+          "stationId": "154ff81c-6511-45a8-bb4a-8a733387d4dd",
+          "name": "Trạm 3",
+          "address": "Trạm 3",
+          "longitude": 106.814861,
+          "latitude": 10.8426088,
+          "status": 1
+        },
+        {
+          "stationId": "6dd3217d-e27b-4862-991c-c1561c616325",
+          "name": "Trạm FPT 2",
+          "address": "Trường Đại học FPT 2",
+          "longitude": 106.811281,
+          "latitude": 10.8395996,
+          "status": 1
+        },
+        {
+          "stationId": "1f10dea0-7c42-47a4-b328-b6d645497455",
+          "name": "Trạm FPT",
+          "address": "Trạm FPT",
+          "longitude": 106.8099174,
+          "latitude": 10.8406637,
+          "status": 1
+        }
+      ],
+      "status": 1
+    },
+    {
+      "routeId": "4e8f9e61-280d-47bb-a10f-f0034a1cbe34",
+      "name": "Tuyến só 2",
+      "distance": 2089.3,
+      "totalStation": 3,
+      "stationList": [
+        {
+          "stationId": "cfcd8e64-5b9b-4706-b116-199655b71d1d",
+          "name": "test",
+          "address": "test",
+          "longitude": 106.8078387,
+          "latitude": 10.8356499,
+          "status": 1
+        },
+        {
+          "stationId": "6dd3217d-e27b-4862-991c-c1561c616325",
+          "name": "Trạm FPT 2",
+          "address": "Trường Đại học FPT 2",
+          "longitude": 106.811281,
+          "latitude": 10.8395996,
+          "status": 1
+        },
+        {
+          "stationId": "1f10dea0-7c42-47a4-b328-b6d645497455",
+          "name": "Trạm FPT",
+          "address": "Trạm FPT",
+          "longitude": 106.8099174,
+          "latitude": 10.8406637,
+          "status": 1
+        }
+      ],
+      "status": 1
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "project_info": {
+    "project_number": "394615991951",
+    "project_id": "fbus-364505",
+    "storage_bucket": "fbus-364505.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394615991951:android:2ca095c20e3a9e61718afa",
+        "android_client_info": {
+          "package_name": "fbus.fbus_mobile_driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "394615991951-88hspcgtej4kdbnvhcgfi90a4ddlfuks.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fbus.fbus_mobile_driver",
+            "certificate_hash": "539b6a0c28105e013cd291202324f514de1e3f92"
+          }
+        },
+        {
+          "client_id": "394615991951-ausmbhom5fv9ageetpj5abr4tvl0c3ge.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fbus.fbus_mobile_driver",
+            "certificate_hash": "250384a02be9497fc70f9719fa1ee4b93254e03c"
+          }
+        },
+        {
+          "client_id": "394615991951-encnv6imrsi7pccv5j0emgtdtg3p00tn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fbus.fbus_mobile_driver",
+            "certificate_hash": "251588b15f059684420ffa7c94dabd77dd3d6113"
+          }
+        },
+        {
+          "client_id": "394615991951-rqu1q8tsiraubvqfo2aq19vg8uiqm3qa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fbus.fbus_mobile_driver",
+            "certificate_hash": "7271d7b84e21d36fbbd8ec9fd07a46a560dafde9"
+          }
+        },
+        {
+          "client_id": "394615991951-vbkvej056pt9rh9qeiqpttac23t9dke6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fbus.fbus_mobile_driver",
+            "certificate_hash": "ef1bbc72fd4397fdbb65ff70440d7c85714fb4f2"
+          }
+        },
+        {
+          "client_id": "394615991951-85f7uf1dkhbhmgcq9pneie1ft9mvcm6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuMy36XTqH_flroqNWpexw56m5RO935PI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "394615991951-85f7uf1dkhbhmgcq9pneie1ft9mvcm6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394615991951:android:d7cb943737810fc5718afa",
+        "android_client_info": {
+          "package_name": "fbus.fbus_mobile_student"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "394615991951-0jrqg6lqvf6ka44nt4d94jfjldd1qfen.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fbus.fbus_mobile_student",
+            "certificate_hash": "250384a02be9497fc70f9719fa1ee4b93254e03c"
+          }
+        },
+        {
+          "client_id": "394615991951-3fm7erqjlub07o66o0kq3jrqjvm66fki.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fbus.fbus_mobile_student",
+            "certificate_hash": "251588b15f059684420ffa7c94dabd77dd3d6113"
+          }
+        },
+        {
+          "client_id": "394615991951-44t6eh4rsgn03jctgisu8dt5bkpq32d6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fbus.fbus_mobile_student",
+            "certificate_hash": "7271d7b84e21d36fbbd8ec9fd07a46a560dafde9"
+          }
+        },
+        {
+          "client_id": "394615991951-clifpav1mhg2ebhf7bornktlul7urae1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fbus.fbus_mobile_student",
+            "certificate_hash": "539b6a0c28105e013cd291202324f514de1e3f92"
+          }
+        },
+        {
+          "client_id": "394615991951-g8dcvql5lu07jmgn461avcisjutmcrpn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fbus.fbus_mobile_student",
+            "certificate_hash": "ef1bbc72fd4397fdbb65ff70440d7c85714fb4f2"
+          }
+        },
+        {
+          "client_id": "394615991951-85f7uf1dkhbhmgcq9pneie1ft9mvcm6n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuMy36XTqH_flroqNWpexw56m5RO935PI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "394615991951-85f7uf1dkhbhmgcq9pneie1ft9mvcm6n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
