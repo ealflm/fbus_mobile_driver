@@ -16,12 +16,13 @@ import 'repository.dart';
 
 class RepositoryImpl extends BaseRepository implements Repository {
   @override
-  Future<String> login(String idToken) async {
+  Future<String> login(String phoneNumber, String password) async {
     var endpoint = '${DioProvider.baseUrl}/authorization/login';
     var data = {
-      'idToken': idToken,
+      'userName': phoneNumber,
+      'password': password,
     };
-    var dioCall = dioClient.post(endpoint, queryParameters: data);
+    var dioCall = dioClient.post(endpoint, data: data);
 
     try {
       return callApi(dioCall).then((response) => response.data['body']);

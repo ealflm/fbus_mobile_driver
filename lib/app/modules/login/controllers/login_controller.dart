@@ -1,21 +1,27 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/utils/auth_service.dart';
 
 class LoginController extends GetxController {
-  Rx<bool> isLoading = false.obs;
-  Rx<bool> hasTapped = false.obs;
+  final formKey = GlobalKey<FormState>();
+  String? phoneNumber;
+  String? password;
 
-  void login() async {
-    hasTapped.value = false;
-    isLoading.value = true;
-    bool result = await AuthService.login();
-    if (!result) {
-      isLoading.value = false;
-    }
+  final Rx<bool> _isLoading = Rx<bool>(false);
+  bool get isLoading => _isLoading.value;
+  set isLoading(bool value) {
+    _isLoading.value = value;
   }
 
-  void tap() {
-    hasTapped.value = true;
+  Future<void> login() async {
+    if (!formKey.currentState!.validate()) return;
+    formKey.currentState!.save();
+
+    isLoading = true;
+
+    await AuthService.login(phoneNumber ?? '', password ?? '');
+
+    isLoading = false;
   }
 }

@@ -5,97 +5,145 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../../core/values/app_colors.dart';
-import '../../../core/values/app_png_assets.dart';
 import '../../../core/values/app_svg_assets.dart';
 import '../../../core/values/font_weights.dart';
 import '../../../core/values/text_styles.dart';
 import '../../../core/widget/status_bar.dart';
+import '../../../core/widget/unfocus.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: controller.tap,
+    return Unfocus(
       child: StatusBar(
         brightness: Brightness.dark,
         child: Scaffold(
-          body: SafeArea(
-            child: Column(
-              children: [
-                Container(
-                  height: 0.45.sh,
-                  alignment: Alignment.bottomCenter,
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: SvgPicture.asset(AppSvgAssets.fbusIsometric),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 30.w,
-                    right: 30.w,
-                    top: 30.h,
+          body: SingleChildScrollView(
+            child: SafeArea(
+              child: Column(
+                children: [
+                  SizedBox(height: 20.h),
+                  Container(
+                    height: 0.35.sh,
+                    alignment: Alignment.bottomCenter,
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: SvgPicture.asset(AppSvgAssets.fbusIsometric),
                   ),
-                  child: Column(
-                    children: [
-                      Text(
-                        'FBus',
-                        style: h4.copyWith(fontWeight: FontWeights.bold),
-                      ),
-                      Text(
-                        'Chào mừng bạn đến với hệ thống đặt xe buýt tại đại học FPT',
-                        textAlign: TextAlign.center,
-                        style: subtitle1.copyWith(
-                          fontSize: 18.sp,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 30.w,
+                      right: 30.w,
+                      top: 30.h,
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          'FBus Driver',
+                          style: h4.copyWith(fontWeight: FontWeights.bold),
                         ),
-                      ),
-                    ],
+                        Text(
+                          'Chúc quý khách thượng lộ bình an',
+                          textAlign: TextAlign.center,
+                          style: subtitle1.copyWith(
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 35.h,
-                ),
-                Obx(() => Opacity(
-                      opacity: controller.hasTapped.value ? 1 : 0,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                  SizedBox(
+                    height: 35.h,
+                  ),
+                  Form(
+                    key: controller.formKey,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 30.sp),
+                      child: Column(
                         children: [
-                          Container(
-                            width: 21.r,
-                            height: 21.r,
-                            padding: EdgeInsets.all(5.r),
-                            decoration: const BoxDecoration(
-                              color: AppColors.secondary,
-                              shape: BoxShape.circle,
+                          TextFormField(
+                            decoration: InputDecoration(
+                              errorStyle: caption,
+                              errorMaxLines: 2,
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 16.h, horizontal: 20.w),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(50.r),
+                              ),
+                              hintText: "Nhập số điện thoại",
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.only(left: 11.w),
+                                child: const Icon(Icons.phone),
+                              ),
+                              counterStyle: const TextStyle(
+                                height: double.minPositive,
+                              ),
+                              counterText: "",
                             ),
-                            child: SvgPicture.asset(
-                              AppSvgAssets.lightBulb,
+                            maxLength: 10,
+                            validator: (value) {
+                              if (value.toString().isEmpty) {
+                                return 'Vui lòng nhập số điện thoại để tiếp tục';
+                              }
+                              if (!value.toString().startsWith('0') ||
+                                  value.toString().length != 10) {
+                                return 'Nhập số điện thoại có 10 chữ số và bắt đầu bằng số 0';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) => controller.phoneNumber = value,
+                            keyboardType: TextInputType.number,
+                          ),
+                          SizedBox(height: 10.h),
+                          TextFormField(
+                            obscureText: true,
+                            obscuringCharacter: '•',
+                            enableSuggestions: false,
+                            autocorrect: false,
+                            decoration: InputDecoration(
+                              errorStyle: caption,
+                              errorMaxLines: 2,
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 16.h, horizontal: 20.w),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(50.r),
+                              ),
+                              hintText: "Nhập mã PIN",
+                              floatingLabelBehavior:
+                                  FloatingLabelBehavior.always,
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.only(left: 11.w),
+                                child: const Icon(Icons.key),
+                              ),
+                              counterStyle: const TextStyle(
+                                height: double.minPositive,
+                              ),
+                              counterText: "",
                             ),
+                            maxLength: 6,
+                            validator: (value) {
+                              if (value.toString().isEmpty) {
+                                return 'Vui lòng nhập mã PIN để tiếp tục';
+                              }
+                              if (value.toString().length != 6) {
+                                return 'Vui lòng nhập 6 chữ số';
+                              }
+                              return null;
+                            },
+                            onSaved: (value) => controller.password = value,
+                            keyboardType: TextInputType.number,
                           ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          Text(
-                            'Vui lòng đăng nhập để tiếp tục',
-                            style: subtitle2.copyWith(
-                              fontWeight: FontWeights.light,
-                              color: AppColors.description,
-                            ),
-                          ),
+                          SizedBox(height: 10.h),
+                          _loginButton(),
                         ],
                       ),
-                    )),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 30.w,
-                    right: 30.w,
-                    top: 10.h,
-                    bottom: 30.w,
+                    ),
                   ),
-                  child: _loginWithGoogleButton(),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -103,10 +151,10 @@ class LoginView extends GetView<LoginController> {
     );
   }
 
-  Widget _loginWithGoogleButton() {
+  Widget _loginButton() {
     return Obx(
       () => ElevatedButton(
-        onPressed: controller.isLoading.value ? null : controller.login,
+        onPressed: controller.isLoading ? null : controller.login,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary400,
           disabledBackgroundColor: AppColors.onSurface.withOpacity(0.12),
@@ -116,7 +164,7 @@ class LoginView extends GetView<LoginController> {
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 10.h),
-          child: controller.isLoading.value
+          child: controller.isLoading
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -143,15 +191,9 @@ class LoginView extends GetView<LoginController> {
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      AppPngAssets.google,
-                      width: 30.w,
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
+                    SizedBox(height: 30.h),
                     Text(
-                      'Đăng nhập với Google',
+                      'Đăng nhập',
                       style: subtitle1.copyWith(
                           fontWeight: FontWeights.medium,
                           color: AppColors.white),

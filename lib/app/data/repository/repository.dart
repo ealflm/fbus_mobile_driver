@@ -6,10 +6,10 @@ import '../models/student_trip_model.dart';
 import '../models/trip_model.dart';
 
 abstract class Repository {
-  /// Google login.
+  /// Base login.
   ///
   /// Return token string.
-  Future<String> login(String idToken);
+  Future<String> login(String phoneNumber, String password);
 
   /// Return list of route
   Future<List<Route>> getRoute();
