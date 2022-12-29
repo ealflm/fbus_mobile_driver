@@ -24,7 +24,7 @@ class LoginView extends GetView<LoginController> {
             child: SafeArea(
               child: Column(
                 children: [
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 10.h),
                   Container(
                     height: 0.35.sh,
                     alignment: Alignment.bottomCenter,
@@ -35,7 +35,7 @@ class LoginView extends GetView<LoginController> {
                     padding: EdgeInsets.only(
                       left: 30.w,
                       right: 30.w,
-                      top: 30.h,
+                      top: 10.h,
                     ),
                     child: Column(
                       children: [
@@ -54,7 +54,7 @@ class LoginView extends GetView<LoginController> {
                     ),
                   ),
                   SizedBox(
-                    height: 35.h,
+                    height: 20.h,
                   ),
                   Form(
                     key: controller.formKey,

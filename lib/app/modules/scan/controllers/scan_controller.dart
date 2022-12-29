@@ -92,7 +92,7 @@ class ScanController extends BaseController {
   }
 
   Future<bool> checkin(String code) async {
-    String studentId = AuthService.student?.id ?? '';
+    String studentId = AuthService.driver?.id ?? '';
     bool result = false;
     var checkinService = repository.checkin(studentId, code);
 

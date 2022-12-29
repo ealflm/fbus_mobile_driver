@@ -28,7 +28,7 @@ class StatisticDataService extends BaseController {
   /// Fetching data here
   Future<void> fetch() async {
     isLoading = true;
-    String studentId = AuthService.student?.id ?? '';
+    String studentId = AuthService.driver?.id ?? '';
     var statisticService = repository.getStatistic(studentId);
 
     await callDataService(

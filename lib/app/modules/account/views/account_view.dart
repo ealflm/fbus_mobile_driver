@@ -46,7 +46,7 @@ class AccountView extends GetView<AccountController> {
                               placeholder: (context, url) {
                                 return SvgPicture.asset(AppSvgAssets.male);
                               },
-                              imageUrl: AuthService.student?.photoUrl ?? '',
+                              imageUrl: AuthService.driver?.photoUrl ?? '',
                               fit: BoxFit.cover,
                               errorWidget: (context, url, error) {
                                 return SvgPicture.asset(AppSvgAssets.male);
@@ -59,7 +59,7 @@ class AccountView extends GetView<AccountController> {
                           height: 15.h,
                         ),
                         Text(
-                          '${AuthService.student?.fullName}',
+                          '${AuthService.driver?.fullName}',
                           style: h6.copyWith(
                               fontWeight: FontWeights.bold, fontSize: 19.sp),
                         ),

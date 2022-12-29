@@ -229,7 +229,7 @@ class SelectTripController extends BaseController {
   }
 
   Future<bool> bookTrip() async {
-    String studentId = AuthService.student?.id ?? '';
+    String studentId = AuthService.driver?.id ?? '';
     String tripId = selectedId ?? '';
     String selectedStationId = selectedTrip?.selectedStation?.id ?? '';
     bool type = selectedTrip?.type ?? false;

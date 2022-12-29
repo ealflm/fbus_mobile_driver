@@ -10,11 +10,12 @@ class Driver {
   Driver({this.id, this.fullName, this.phone, this.photoUrl, this.address});
 
   Driver.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    fullName = json['fullName'];
-    phone = json['phone'];
-    photoUrl =
-        AppSettings.get('driverPhotoUrlHost') + '/' + json['photoUrl'].trim();
-    address = json['address'];
+    id = json['DriverId'];
+    fullName = json['FullName'];
+    phone = json['Phone'];
+    photoUrl = AppSettings.get('driverPhotoUrlHost') +
+        '/' +
+        (json['PhotoUrl'] ?? '').trim();
+    address = json['Address'];
   }
 }

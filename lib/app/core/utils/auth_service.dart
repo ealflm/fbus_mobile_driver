@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../data/models/student_model.dart';
+import '../../data/models/driver_model.dart';
 import '../../routes/app_pages.dart';
 import '../base/base_controller.dart';
 import '../widget/shared.dart';
@@ -34,12 +34,12 @@ class AuthService extends BaseController {
     return _instance._token;
   }
 
-  /// Get student model
-  static Student? get student {
+  /// Get driver model
+  static Driver? get driver {
     Map<String, dynamic> payload = Jwt.parseJwt(token.toString());
 
     if (payload.isNotEmpty) {
-      return Student.fromJson(payload);
+      return Driver.fromJson(payload);
     }
     return null;
   }

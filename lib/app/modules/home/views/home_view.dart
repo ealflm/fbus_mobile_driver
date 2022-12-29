@@ -59,7 +59,7 @@ class HomeView extends GetView<HomeController> {
                                               AppSvgAssets.male);
                                         },
                                         imageUrl:
-                                            AuthService.student?.photoUrl ?? '',
+                                            AuthService.driver?.photoUrl ?? '',
                                         fit: BoxFit.cover,
                                         errorWidget: (context, url, error) {
                                           return SvgPicture.asset(
@@ -83,7 +83,7 @@ class HomeView extends GetView<HomeController> {
                                         ),
                                       ),
                                       Text(
-                                        '${AuthService.student?.fullName}',
+                                        '${AuthService.driver?.fullName}',
                                         style: subtitle1.copyWith(
                                           fontWeight: FontWeights.medium,
                                           color: AppColors.white,
