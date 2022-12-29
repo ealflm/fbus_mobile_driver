@@ -35,8 +35,8 @@ class NotificationController extends BaseController {
 
     List<Notification> result = [];
 
-    String studentId = AuthService.driver?.id ?? '';
-    var fetchNotificationsDataService = repository.getNotifications(studentId);
+    String driverId = AuthService.driver?.id ?? '';
+    var fetchNotificationsDataService = repository.getNotifications(driverId);
 
     await callDataService(
       fetchNotificationsDataService,

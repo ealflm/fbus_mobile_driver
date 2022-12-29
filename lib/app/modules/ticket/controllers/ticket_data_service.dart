@@ -72,8 +72,8 @@ class TicketDataService extends BaseController {
 
   Future<void> fetchTickets() async {
     isLoading = true;
-    String studentId = AuthService.driver?.id ?? '';
-    var fetchTicketsService = repository.getTickets(studentId);
+    String driverId = AuthService.driver?.id ?? '';
+    var fetchTicketsService = repository.getTickets(driverId);
 
     await callDataService(
       fetchTicketsService,

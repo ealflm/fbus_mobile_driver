@@ -88,10 +88,10 @@ class RepositoryImpl extends BaseRepository implements Repository {
 
   @override
   Future<void> bookTrip(
-      String studentId, String tripId, String selectedStationId, bool type) {
+      String driverId, String tripId, String selectedStationId, bool type) {
     var endPoint = '${DioProvider.baseUrl}/student-trip';
     var data = {
-      'studentId': studentId,
+      'driverId': driverId,
       'tripId': tripId,
       'stationId': selectedStationId,
       'type': type,
@@ -124,8 +124,8 @@ class RepositoryImpl extends BaseRepository implements Repository {
   }
 
   @override
-  Future<List<Notification>> getNotifications(String studentId) {
-    var endPoint = '${DioProvider.baseUrl}/notification/$studentId';
+  Future<List<Notification>> getNotifications(String driverId) {
+    var endPoint = '${DioProvider.baseUrl}/notification/$driverId';
 
     var dioCall = dioTokenClient.get(endPoint);
 
@@ -145,10 +145,10 @@ class RepositoryImpl extends BaseRepository implements Repository {
   }
 
   @override
-  Future<List<Ticket>> getTickets(String studentId) {
+  Future<List<Ticket>> getTickets(String driverId) {
     var endPoint = '${DioProvider.baseUrl}/student-trip';
 
-    var data = {'id': studentId};
+    var data = {'id': driverId};
     var dioCall = dioTokenClient.get(endPoint, queryParameters: data);
 
     try {
@@ -212,8 +212,8 @@ class RepositoryImpl extends BaseRepository implements Repository {
   }
 
   @override
-  Future<Ticket?> getCurrentTicket(String studentId) {
-    var endPoint = '${DioProvider.baseUrl}/student-trip/current/$studentId';
+  Future<Ticket?> getCurrentTicket(String driverId) {
+    var endPoint = '${DioProvider.baseUrl}/student-trip/current/$driverId';
     var dioCall = dioTokenClient.get(endPoint);
 
     try {
@@ -269,8 +269,8 @@ class RepositoryImpl extends BaseRepository implements Repository {
   }
 
   @override
-  Future<Statistic> getStatistic(String studentId) {
-    var endPoint = '${DioProvider.baseUrl}/statistics/$studentId';
+  Future<Statistic> getStatistic(String driverId) {
+    var endPoint = '${DioProvider.baseUrl}/statistics/$driverId';
 
     var dioCall = dioTokenClient.get(endPoint);
 
@@ -282,12 +282,12 @@ class RepositoryImpl extends BaseRepository implements Repository {
   }
 
   @override
-  Future<void> checkin(String studentId, String code) {
+  Future<void> checkin(String driverId, String code) {
     var endPoint = '${DioProvider.baseUrl}/student-trip/checkin';
 
     var data = {
       'qrCode': code,
-      'studentID': studentId,
+      'studentID': driverId,
     };
 
     var dioCall = dioTokenClient.patch(endPoint, data: data);

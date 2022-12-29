@@ -20,25 +20,25 @@ abstract class Repository {
 
   /// Booking trip
   Future<void> bookTrip(
-      String studentId, String tripId, String selectedStationId, bool type);
+      String driverId, String tripId, String selectedStationId, bool type);
 
   /// Register notification
-  Future<void> registerNotification(String studentId, String code);
+  Future<void> registerNotification(String driverId, String code);
 
   /// Get list of notification
-  Future<List<Notification>> getNotifications(String studentId);
+  Future<List<Notification>> getNotifications(String driverId);
 
   /// Get ticket list
-  Future<List<Ticket>> getTickets(String studentId);
+  Future<List<Ticket>> getTickets(String driverId);
 
   /// Get current Ticket
-  Future<Ticket?> getCurrentTicket(String studentId);
+  Future<Ticket?> getCurrentTicket(String driverId);
 
   /// Get current Ticket
-  Future<Statistic> getStatistic(String studentId);
+  Future<Statistic> getStatistic(String driverId);
 
   // Check in
-  Future<void> checkin(String studentId, String code);
+  Future<void> checkin(String driverId, String code);
 
   // Feedback a trip by studenTripId
   Future<void> feedback(String studentTripId, double rate, String message);
