@@ -15,7 +15,7 @@ import '../../../core/widget/hyper_dialog.dart';
 import '../../../core/widget/shared.dart';
 import '../../../core/widget/ticket_item_expanded.dart';
 import '../../../data/models/selected_trip_model.dart';
-import '../../../data/models/trip_model.dart';
+import '../../../data/models/tripx_model.dart';
 import '../../../routes/app_pages.dart';
 import 'select_trip_data_service.dart';
 
@@ -122,7 +122,7 @@ class SelectTripController extends BaseController {
       (() {
         List<Widget> tripItems = [];
 
-        List<Trip> trips = selectedTripDataService.trips ?? [];
+        List<Tripx> trips = selectedTripDataService.trips ?? [];
 
         trips.sort(
           (a, b) {
@@ -130,7 +130,7 @@ class SelectTripController extends BaseController {
           },
         );
 
-        for (Trip trip in trips) {
+        for (Tripx trip in trips) {
           tripItems.add(tripItem(trip));
           tripItems.add(SizedBox(
             height: 10.h,
@@ -157,7 +157,7 @@ class SelectTripController extends BaseController {
     );
   }
 
-  Widget tripItem(Trip trip) {
+  Widget tripItem(Tripx trip) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(left: 15.w, right: 15.w),

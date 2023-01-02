@@ -3,7 +3,7 @@ import '../models/route_model.dart';
 import '../models/selected_trip_model.dart';
 import '../models/statistic_model.dart';
 import '../models/student_trip_model.dart';
-import '../models/trip_model.dart';
+import '../models/tripx_model.dart';
 
 abstract class Repository {
   /// Base login.
@@ -15,7 +15,7 @@ abstract class Repository {
   Future<List<Route>> getRoute();
 
   /// Get trip with routeId and datetime
-  Future<List<Trip>> getTrip(
+  Future<List<Tripx>> getTrip(
       String routeId, DateTime dateTime, SelectedTrip selectedTrip);
 
   /// Booking trip

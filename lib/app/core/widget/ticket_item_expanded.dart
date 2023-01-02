@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../data/models/trip_model.dart';
+import '../../data/models/tripx_model.dart';
 import '../values/app_colors.dart';
 import '../values/app_svg_assets.dart';
 import '../values/font_weights.dart';
@@ -22,7 +22,7 @@ class TicketItemExpanded extends StatelessWidget {
     this.actionButtonOnPressed,
   }) : super(key: key);
 
-  final Trip trip;
+  final Tripx trip;
   final Color backgroundColor;
   final Color textColor;
   final Color expandedBackgroundColor;

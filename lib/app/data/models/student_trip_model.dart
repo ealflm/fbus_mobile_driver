@@ -6,11 +6,11 @@ import '../../core/utils/utils.dart';
 import 'direction_model.dart';
 import 'route_model.dart';
 import 'station_model.dart';
-import 'trip_model.dart';
+import 'tripx_model.dart';
 
 class Ticket {
   String? id;
-  Trip? trip;
+  Tripx? trip;
   Station? selectedStation;
   Route? route;
   Direction? direction;
@@ -94,7 +94,7 @@ class Ticket {
 
   Ticket.fromJson(Map<String, dynamic> json) {
     id = json['studentTripId'];
-    trip = Trip.fromJson(json['trip']);
+    trip = Tripx.fromJson(json['trip']);
     selectedStation = Station.fromJson(json['station']);
     Map<String, dynamic> routeJson = jsonDecode(json['copyOfRoute'] ?? '{}');
     route = Route.fromJsonCapitalizeFirstLetter(routeJson);

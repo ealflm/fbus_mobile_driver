@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../../../core/base/base_controller.dart';
 import '../../../core/widget/shared.dart';
 import '../../../data/models/selected_trip_model.dart';
-import '../../../data/models/trip_model.dart';
+import '../../../data/models/tripx_model.dart';
 
 class SelectTripDataService extends BaseController {
   final Rx<bool> _isLoading = Rx<bool>(false);
@@ -13,9 +13,9 @@ class SelectTripDataService extends BaseController {
   }
 
   // Trip
-  final Rx<List<Trip>?> _trips = Rx<List<Trip>?>(null);
-  List<Trip>? get trips => _trips.value;
-  set trips(List<Trip>? value) {
+  final Rx<List<Tripx>?> _trips = Rx<List<Tripx>?>(null);
+  List<Tripx>? get trips => _trips.value;
+  set trips(List<Tripx>? value) {
     _trips.value = value;
   }
 
@@ -27,7 +27,7 @@ class SelectTripDataService extends BaseController {
 
     await callDataService(
       tripService,
-      onSuccess: (List<Trip> response) {
+      onSuccess: (List<Tripx> response) {
         trips = response;
       },
       onError: (exception) {

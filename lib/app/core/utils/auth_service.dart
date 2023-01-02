@@ -39,7 +39,7 @@ class AuthService extends BaseController {
     Map<String, dynamic> payload = Jwt.parseJwt(token.toString());
 
     if (payload.isNotEmpty) {
-      return Driver.fromJson(payload);
+      return Driver.fromJsonCapitalizeFirstLetter(payload);
     }
     return null;
   }

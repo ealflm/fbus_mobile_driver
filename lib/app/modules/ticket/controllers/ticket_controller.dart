@@ -10,7 +10,6 @@ import '../../../core/widget/ticket_item.dart';
 import '../../../data/models/student_trip_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../home/controllers/home_ticket_data_service.dart';
-import '../views/tab_views/today_ticket_view.dart';
 import '../views/tab_views/future_ticket_view.dart';
 import '../views/tab_views/past_ticket_view.dart';
 import 'ticket_data_service.dart';
@@ -20,16 +19,14 @@ class TicketController extends GetxController
   late TabController tabController;
 
   final tabs = [
-    const Tab(text: 'Hôm nay'),
+    const Tab(text: 'Sắp tới'),
     const Tab(text: 'Trước đó'),
-    const Tab(text: 'Sau này'),
   ];
 
   Rx<int> tabIndex = 0.obs;
   final List<Widget> screens = [
-    const TodayTicketView(),
-    const PastTicketView(),
     const FutureTicketView(),
+    const PastTicketView(),
   ];
 
   void changeTab(int index) {
@@ -48,38 +45,6 @@ class TicketController extends GetxController
 
   HomeTicketDataService homeTicketDataService =
       Get.find<HomeTicketDataService>();
-
-  Widget todayTickets() {
-    return Obx(
-      () {
-        if (ticketDataService.isLoading) {
-          return Center(
-            child: Lottie.asset(
-              AppAnimationAssets.loading,
-              height: 100.r,
-            ),
-          );
-        }
-
-        List<Widget> ticketList = [];
-
-        for (Ticket ticket in ticketDataService.todayTickets) {
-          ticketList.add(ticketItem(ticket, 'Hôm nay'));
-          ticketList.add(SizedBox(
-            height: 10.h,
-          ));
-        }
-
-        if (ticketList.isEmpty) {
-          return Center(child: Text('Không có vé', style: body2));
-        }
-
-        return Column(
-          children: ticketList,
-        );
-      },
-    );
-  }
 
   Widget pastTickets() {
     return Obx(

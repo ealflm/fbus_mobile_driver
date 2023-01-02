@@ -6,7 +6,7 @@ import '../../core/widget/shared.dart';
 import 'direction_model.dart';
 import 'route_model.dart';
 import 'station_model.dart';
-import 'trip_model.dart';
+import 'tripx_model.dart';
 
 class SelectedTrip extends BaseController {
   // Selected route
@@ -17,9 +17,9 @@ class SelectedTrip extends BaseController {
   }
 
   // Selected trip
-  final Rx<Trip?> _selectedTrip = Rx<Trip?>(null);
-  Trip? get selectedTrip => _selectedTrip.value;
-  set selectedTrip(Trip? value) {
+  final Rx<Tripx?> _selectedTrip = Rx<Tripx?>(null);
+  Tripx? get selectedTrip => _selectedTrip.value;
+  set selectedTrip(Tripx? value) {
     _selectedTrip.value = value;
   }
 
