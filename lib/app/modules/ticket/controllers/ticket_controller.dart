@@ -6,13 +6,13 @@ import 'package:lottie/lottie.dart';
 import '../../../core/values/app_animation_assets.dart';
 import '../../../core/values/app_colors.dart';
 import '../../../core/values/text_styles.dart';
-import '../../../core/widget/ticket_item.dart';
-import '../../../data/models/student_trip_model.dart';
+import '../../../core/widget/trip_item.dart';
+import '../../../data/models/trip_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../home/controllers/home_ticket_data_service.dart';
 import '../views/tab_views/future_ticket_view.dart';
 import '../views/tab_views/past_ticket_view.dart';
-import 'ticket_data_service.dart';
+import 'trip_data_service.dart';
 
 class TicketController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -34,12 +34,12 @@ class TicketController extends GetxController
     tabIndex.value = index;
   }
 
-  TicketDataService ticketDataService = TicketDataService();
+  TripDataService tripDataService = TripDataService();
 
   @override
   void onInit() {
-    tabController = TabController(length: 3, vsync: this);
-    ticketDataService.fetchTickets();
+    tabController = TabController(length: 2, vsync: this);
+    tripDataService.fetch();
     super.onInit();
   }
 
@@ -49,7 +49,7 @@ class TicketController extends GetxController
   Widget pastTickets() {
     return Obx(
       () {
-        if (ticketDataService.isLoading) {
+        if (tripDataService.isLoading) {
           return Center(
             child: Lottie.asset(
               AppAnimationAssets.loading,
@@ -58,21 +58,21 @@ class TicketController extends GetxController
           );
         }
 
-        List<Widget> ticketList = [];
+        List<Widget> trips = [];
 
-        for (Ticket ticket in ticketDataService.pastTickets) {
-          ticketList.add(ticketItem(ticket, 'Đã qua'));
-          ticketList.add(SizedBox(
+        for (Trip trip in tripDataService.pastTrips ?? []) {
+          trips.add(ticketItem(trip));
+          trips.add(SizedBox(
             height: 10.h,
           ));
         }
 
-        if (ticketList.isEmpty) {
-          return Center(child: Text('Không có vé', style: body2));
+        if (trips.isEmpty) {
+          return Center(child: Text('Không có chuyến đi', style: body2));
         }
 
         return Column(
-          children: ticketList,
+          children: trips,
         );
       },
     );
@@ -81,7 +81,7 @@ class TicketController extends GetxController
   Widget futureTickets() {
     return Obx(
       () {
-        if (ticketDataService.isLoading) {
+        if (tripDataService.isLoading) {
           return Center(
             child: Lottie.asset(
               AppAnimationAssets.loading,
@@ -90,59 +90,46 @@ class TicketController extends GetxController
           );
         }
 
-        List<Widget> ticketList = [];
+        List<Widget> trips = [];
 
-        for (Ticket ticket in ticketDataService.futureTickets) {
-          ticketList.add(ticketItem(ticket, 'Sắp tới'));
-          ticketList.add(SizedBox(
+        for (Trip trip in tripDataService.futureTrips ?? []) {
+          trips.add(ticketItem(trip));
+          trips.add(SizedBox(
             height: 10.h,
           ));
         }
 
-        if (ticketList.isEmpty) {
-          return Center(child: Text('Không có vé', style: body2));
+        if (trips.isEmpty) {
+          return Center(child: Text('Không có chuyến đi', style: body2));
         }
 
         return Column(
-          children: ticketList,
+          children: trips,
         );
       },
     );
   }
 
-  Widget ticketItem(Ticket ticket, String title) {
+  Widget ticketItem(Trip trip) {
     Color backgroundColor = AppColors.white;
     Color textColor = AppColors.softBlack;
-    Ticket? currentTicket = homeTicketDataService.ticket;
 
-    if (currentTicket?.id == ticket.id) {
-      if (ticket.status == 2) {
-        backgroundColor = AppColors.green;
-        textColor = AppColors.white;
-        title = 'Đang diễn ra';
-      } else {
-        backgroundColor = AppColors.purple500;
-        textColor = AppColors.white;
-        title = 'Chuyến đi gần nhất';
-      }
-    }
-
-    if (ticket.isPassed) {
+    if (trip.title == 'Đã qua') {
       backgroundColor = AppColors.caption;
       textColor = AppColors.white;
-      title = 'Đã sử dụng';
     }
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(left: 15.w, right: 15.w),
-      child: TicketItem(
-        title: title,
-        ticket: ticket,
-        state: TicketItemExpandedState.less,
+      child: TripItem(
+        title: trip.title,
+        trip: trip,
+        state: TripItemExpandedState.less,
         backgroundColor: backgroundColor,
         textColor: textColor,
         onPressed: () {
-          Get.toNamed(Routes.TICKET_DETAIL, arguments: {'ticket': ticket});
+          Get.toNamed(Routes.TICKET_DETAIL, arguments: {'trip': trip});
         },
       ),
     );

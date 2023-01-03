@@ -41,11 +41,9 @@ class TicketDetailView extends GetView<TicketDetailController> {
                 ),
                 Stack(
                   children: [
-                    // controller.routesPolyline(),
-                    controller.ticketPolyline(),
+                    controller.routesPolyline(),
                     _currentLocationMarker(),
                     controller.stationMarkers(),
-                    controller.untouchableStation(),
                     controller.selectedStationMarker(),
                   ],
                 ),

@@ -9,6 +9,14 @@ class Route {
   List<Station>? stations;
   List<LatLng>? points;
 
+  Station? get startStation {
+    return stations?.first;
+  }
+
+  Station? get endStation {
+    return stations?.last;
+  }
+
   String get distanceStr {
     if (distance != null) {
       double value = distance! / 1000;

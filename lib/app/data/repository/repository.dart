@@ -3,6 +3,7 @@ import '../models/route_model.dart';
 import '../models/selected_trip_model.dart';
 import '../models/statistic_model.dart';
 import '../models/student_trip_model.dart';
+import '../models/trip_model.dart';
 import '../models/tripx_model.dart';
 
 abstract class Repository {
@@ -45,4 +46,10 @@ abstract class Repository {
 
   // Delete a trip by studenTripId
   Future<void> removeTrip(String studentTripId);
+
+  // Fetch future trips
+  Future<List<Trip>> getFutureTrips(String driverId);
+
+  // Fetch past trips
+  Future<List<Trip>> getPastTrips(String driverId);
 }

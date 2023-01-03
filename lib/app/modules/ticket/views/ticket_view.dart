@@ -51,7 +51,7 @@ class TicketView extends GetView<TicketController> {
                 right: 18.w,
               ),
               child: Text(
-                'Vé của tôi',
+                'Lịch trình',
                 style: h5.copyWith(color: AppColors.softBlack),
               ),
             ),

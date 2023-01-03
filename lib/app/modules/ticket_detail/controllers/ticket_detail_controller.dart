@@ -7,24 +7,47 @@ import 'package:latlong2/latlong.dart';
 
 import '../../../core/base/base_controller.dart';
 import '../../../core/utils/map_utils.dart';
-import '../../../core/utils/notification_service.dart';
 import '../../../core/values/app_colors.dart';
 import '../../../core/values/app_svg_assets.dart';
+import '../../../core/values/font_weights.dart';
 import '../../../core/values/text_styles.dart';
-import '../../../core/widget/hyper_dialog.dart';
 import '../../../core/widget/shared.dart';
-import '../../../core/widget/ticket_item.dart';
+import '../../../core/widget/trip_item.dart';
 import '../../../data/models/station_model.dart';
 import '../../../data/models/student_trip_model.dart';
+import '../../../data/models/trip_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../home/controllers/home_ticket_data_service.dart';
 import '../../map/hyper_map_controller.dart';
 
 class TicketDetailController extends BaseController {
-  final Rx<Ticket?> _ticket = Rx<Ticket?>(null);
-  Ticket? get ticket => _ticket.value;
-  set ticket(Ticket? value) {
-    _ticket.value = value;
+  final Rx<Trip?> _trip = Rx<Trip?>(null);
+  Trip? get trip => _trip.value;
+  set trip(Trip? value) {
+    _trip.value = value;
+  }
+
+  final Rx<String?> _selectedStationId = Rx<String?>(null);
+  String? get selectedStationId => _selectedStationId.value;
+  set selectedStationId(String? value) {
+    _selectedStationId.value = value;
+  }
+
+  Station? get selectedStation {
+    Station? result;
+    for (Station station in trip?.route?.stations ?? []) {
+      if (station.id == selectedStationId) {
+        result = station;
+        break;
+      }
+    }
+    return result;
+  }
+
+  final Rx<List<LatLng>> _points = Rx<List<LatLng>>([]);
+  List<LatLng> get points => _points.value;
+  set points(List<LatLng> value) {
+    _points.value = value;
   }
 
   HyperMapController hyperMapController = HyperMapController();
@@ -35,8 +58,9 @@ class TicketDetailController extends BaseController {
     if (Get.arguments != null) {
       arg = Get.arguments as Map<String, dynamic>;
     }
-    if (arg.containsKey('ticket')) {
-      ticket = arg['ticket'];
+    if (arg.containsKey('trip')) {
+      trip = arg['trip'];
+      selectedStationId = trip?.route?.startStation?.id;
     } else {
       showToast('Đã có lỗi xảy ra');
       Get.back();
@@ -46,11 +70,17 @@ class TicketDetailController extends BaseController {
 
   void onMapReady() async {
     await hyperMapController.refreshCurrentLocation();
+    await fetchPoints();
     moveScreenToTicketPolyline();
   }
 
   HomeTicketDataService homeTicketDataService =
       Get.find<HomeTicketDataService>();
+
+  Future<void> fetchPoints() async {
+    points = await goongRepository
+        .getRoutePoints(trip?.route?.stationLocations ?? []);
+  }
 
   Future<bool> cancelTrip(Ticket? ticket) async {
     bool result = false;
@@ -94,153 +124,103 @@ class TicketDetailController extends BaseController {
                 ),
               ],
             ),
-            ticketItem(ticket?.title ?? ''),
+            ticketItem(trip!),
           ],
         ),
       );
     }));
   }
 
-  Widget ticketItem(String title) {
+  Widget ticketItem(Trip trip) {
     Color backgroundColor = AppColors.white;
     Color textColor = AppColors.softBlack;
-    Ticket? currentTicket = homeTicketDataService.ticket;
-    TicketState ticketState = TicketState.disabledCancel;
-    Function()? onPressed;
-    Widget? buttonChild;
-    Feedback? feedback;
-    bool hideButton = false;
 
-    if (currentTicket?.id == ticket?.id) {
-      if (ticket?.status == 2) {
-        backgroundColor = AppColors.green;
-        textColor = AppColors.white;
-        title = 'Đang diễn ra';
-      } else {
-        backgroundColor = AppColors.purple500;
-        textColor = AppColors.white;
-        title = 'Chuyến đi gần nhất';
-      }
-    }
-
-    if (ticket?.isPassed == true) {
+    if (trip.title == 'Đã qua') {
       backgroundColor = AppColors.caption;
       textColor = AppColors.white;
-      title = 'Đã sử dụng';
-      if (ticket?.rate != null && ticket?.rate != 0) {
-        ticketState = TicketState.hasFeedbacked;
-      } else {
-        ticketState = TicketState.feedback;
-      }
-    } else {
-      if (ticket?.trip!.date != null) {
-        DateTime date = ticket!.trip!.date!;
-        DateTime now = DateTime.now();
-
-        if (now.add(const Duration(minutes: 30)).compareTo(date) <= 0) {
-          ticketState = TicketState.cancel;
-        } else {
-          ticketState = TicketState.disabledCancel;
-        }
-      }
     }
 
-    switch (ticketState) {
-      case TicketState.feedback:
-        onPressed = () {
-          Get.toNamed(Routes.FEED_BACK, arguments: {
-            'ticket': ticket,
-          });
-        };
-        buttonChild = Text(
-          'Đánh giá',
-          style: subtitle2.copyWith(color: AppColors.white),
-        );
-        break;
-      case TicketState.disabledCancel:
-        buttonChild = Text(
-          'Huỷ',
-          style: subtitle2.copyWith(color: AppColors.white),
-        );
-        break;
-      case TicketState.cancel:
-        onPressed = () {
-          HyperDialog.show(
-            title: 'Xác nhận',
-            content: 'Bạn có chắc chắn muốn huỷ chuyến xe này không?',
-            primaryButtonText: 'Xác nhận',
-            secondaryButtonText: 'Huỷ',
-            primaryOnPressed: () async {
-              HyperDialog.showLoading();
-              bool isSuccess = await cancelTrip(ticket);
-              if (isSuccess) {
-                HyperDialog.showSuccess(
-                  title: 'Thành công',
-                  content: 'Huỷ vé thành công!',
-                  barrierDismissible: false,
-                  primaryButtonText: 'Trở về trang chủ',
-                  secondaryButtonText: 'Đóng',
-                  primaryOnPressed: () {
-                    Get.offAllNamed(Routes.MAIN);
-                  },
-                  secondaryOnPressed: () {
-                    NotificationService.reloadData();
-                    Get.back();
-                    Get.back();
-                  },
-                );
-              } else {
-                HyperDialog.showFail(
-                  title: 'Thất bại',
-                  content: 'Đã có lỗi xảy ra trong quá trình huỷ vé',
-                  barrierDismissible: false,
-                  primaryButtonText: 'Trở về trang chủ',
-                  secondaryButtonText: 'Đóng',
-                  primaryOnPressed: () {
-                    Get.offAllNamed(Routes.MAIN);
-                  },
-                  secondaryOnPressed: () {
-                    Get.back();
-                  },
-                );
-              }
-            },
-            secondaryOnPressed: () {
-              Get.back();
-            },
-          );
-        };
-        buttonChild = Text(
-          'Huỷ',
-          style: subtitle2.copyWith(color: AppColors.white),
-        );
-        break;
-      case TicketState.hasFeedbacked:
-        hideButton = true;
-        feedback =
-            Feedback(rate: ticket?.rate ?? 0, message: ticket?.feedback ?? '');
-        break;
+    List<Widget> stationList = [];
+    for (Station station in trip.route?.stations ?? []) {
+      stationList.add(_stationItem(station));
     }
 
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(left: 15.w, right: 15.w),
-      child: TicketItem(
-        title: title,
-        ticket: ticket!,
-        state: TicketItemExpandedState.more,
+      child: TripItem(
+        title: trip.title,
+        trip: trip,
+        state: TripItemExpandedState.more,
         backgroundColor: backgroundColor,
         textColor: textColor,
-        expandedBackgroundColor: backgroundColor,
-        expandedTextColor: textColor,
-        button: ElevatedButton(
-          style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-          onPressed: onPressed,
-          child: buttonChild,
-        ),
-        feedback: feedback,
-        hideButton: hideButton,
+        stationList: stationList,
       ),
+    );
+  }
+
+  Widget _stationItem(Station station) {
+    return _selectItem(
+      onPressed: () {
+        selectedStationId = station.id;
+        moveScreenToSelectedStation();
+      },
+      isSelected: station.id == selectedStationId,
+      name: station.name,
+      description: '5 người',
+    );
+  }
+
+  Widget _selectItem(
+      {Function()? onPressed,
+      bool isSelected = false,
+      String? name,
+      String? description}) {
+    return Column(
+      children: [
+        Material(
+          child: InkWell(
+            onTap: onPressed,
+            child: Container(
+              color: isSelected ? AppColors.gray.withOpacity(0.3) : null,
+              padding: EdgeInsets.symmetric(horizontal: 15.w),
+              width: double.infinity,
+              height: 40.h,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '$name',
+                      overflow: TextOverflow.ellipsis,
+                      style: subtitle2.copyWith(
+                          fontWeight: isSelected
+                              ? FontWeights.medium
+                              : FontWeights.regular),
+                    ),
+                  ),
+                  if (description != null)
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 10.w,
+                        ),
+                        Text(
+                          description,
+                          style: subtitle2.copyWith(
+                              fontWeight: FontWeights.regular),
+                        ),
+                      ],
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 1,
+        ),
+      ],
     );
   }
 
@@ -249,7 +229,7 @@ class TicketDetailController extends BaseController {
       () {
         List<Marker> markers = [];
 
-        for (Station station in ticket?.route?.stations ?? []) {
+        for (Station station in trip?.route?.stations ?? []) {
           markers.add(
             Marker(
               width: 80.r,
@@ -282,27 +262,6 @@ class TicketDetailController extends BaseController {
       () {
         return PolylineLayer(
           polylineCulling: true,
-          // saveLayers: true,
-          polylines: [
-            Polyline(
-              color: AppColors.indicator,
-              borderColor: AppColors.caption,
-              strokeWidth: 4.r,
-              borderStrokeWidth: 3.r,
-              points: ticket?.route?.points ?? [],
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget ticketPolyline() {
-    return Obx(
-      () {
-        return PolylineLayer(
-          polylineCulling: true,
-          // saveLayers: true,
           polylines: [
             Polyline(
               gradientColors: [
@@ -315,78 +274,8 @@ class TicketDetailController extends BaseController {
               borderColor: AppColors.purple900,
               strokeWidth: 5.r,
               borderStrokeWidth: 2.r,
-              points: ticket?.direction?.points ?? [],
-            )
-          ],
-        );
-      },
-    );
-  }
-
-  Widget untouchableStation() {
-    return Obx(
-      () {
-        Station? station;
-        if (ticket?.type == false) {
-          station = ticket?.route?.stations?.first;
-        } else if (ticket?.type == true) {
-          station = ticket?.route?.stations?.last;
-        } else {
-          return Container();
-        }
-        if (station == null) {
-          return Container();
-        }
-        return MarkerLayer(
-          markers: [
-            Marker(
-              width: 200.r,
-              height: 90.r,
-              point: station.location ?? LatLng(0, 0),
-              builder: (context) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 6.w,
-                        vertical: 3.h,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(8.r),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: const Offset(0, 2),
-                            blurRadius: 2,
-                            spreadRadius: 0,
-                            color: AppColors.black.withOpacity(0.2),
-                          ),
-                        ],
-                      ),
-                      child: Text(
-                        '${station?.name}',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: body2.copyWith(
-                          color: AppColors.softBlack,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    SvgPicture.asset(
-                      ticket?.type == true
-                          ? AppSvgAssets.busIconTo
-                          : AppSvgAssets.busIconFrom,
-                      height: 25.r,
-                      width: 25.r,
-                    ),
-                  ],
-                );
-              },
-            )
+              points: points,
+            ),
           ],
         );
       },
@@ -396,13 +285,19 @@ class TicketDetailController extends BaseController {
   Widget selectedStationMarker() {
     return Obx(
       () {
-        if (ticket?.selectedStation == null) return Container();
-        Station station = ticket!.selectedStation!;
+        int type = 0;
+        Station? station = selectedStation;
+        if (station == null) return Container();
+        if (station.id == trip?.route?.startStation?.id) {
+          type = 1;
+        } else if (station.id == trip?.route?.endStation?.id) {
+          type = 2;
+        }
         return MarkerLayer(
           markers: [
             Marker(
               width: 200.r,
-              height: 90.r,
+              height: 120.r,
               point: station.location ?? LatLng(0, 0),
               builder: (context) {
                 return Column(
@@ -425,22 +320,38 @@ class TicketDetailController extends BaseController {
                           ),
                         ],
                       ),
-                      child: Text(
-                        '${station.name}',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: body2.copyWith(
-                          color: AppColors.softBlack,
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${station.name}',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: body2.copyWith(
+                              color: AppColors.softBlack,
+                            ),
+                          ),
+                          Text(
+                            'Số người cần đón: 5',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: caption.copyWith(
+                              fontWeight: FontWeights.medium,
+                              color: AppColors.softBlack,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(
                       height: 10.h,
                     ),
                     SvgPicture.asset(
-                      ticket?.type == true
+                      type == 1
                           ? AppSvgAssets.busIconFrom
-                          : AppSvgAssets.busIconTo,
+                          : type == 2
+                              ? AppSvgAssets.busIconTo
+                              : AppSvgAssets.busIcon,
                       height: 25.r,
                       width: 25.r,
                     ),
@@ -455,7 +366,7 @@ class TicketDetailController extends BaseController {
   }
 
   void moveScreenToTicketPolyline() {
-    List<LatLng> points = ticket?.direction?.points ?? [];
+    List<LatLng> points = this.points;
 
     if (points.isNotEmpty) {
       var bounds = LatLngBounds();
@@ -463,7 +374,19 @@ class TicketDetailController extends BaseController {
         bounds.extend(point);
       }
 
-      bounds = MapUtils.padTop(bounds, 0.3, 0.7);
+      bounds = MapUtils.padBottom(bounds, 0.3, 0.7);
+
+      hyperMapController.centerZoomFitBounds(bounds);
+    }
+  }
+
+  void moveScreenToSelectedStation() {
+    if (selectedStation == null) return;
+    if (selectedStation?.location != null) {
+      var bounds = LatLngBounds();
+      bounds.extend(selectedStation?.location!);
+
+      bounds = MapUtils.padBottomSinglePoint(bounds, 0.028, 0.042);
 
       hyperMapController.centerZoomFitBounds(bounds);
     }

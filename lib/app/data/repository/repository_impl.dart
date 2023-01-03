@@ -1,3 +1,4 @@
+import 'package:fbus_mobile_driver/app/data/models/trip_model.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -320,5 +321,41 @@ class RepositoryImpl extends BaseRepository implements Repository {
     var dioCall = dioTokenClient.delete(endPoint);
 
     return callApi(dioCall);
+  }
+
+  @override
+  Future<List<Trip>> getFutureTrips(String driverId) {
+    var endPoint = '${DioProvider.baseUrl}/trip/schedule/$driverId';
+
+    var dioCall = dioTokenClient.get(endPoint);
+
+    return callApi(dioCall).then((response) {
+      var result = <Trip>[];
+      if (response.data['body'] != null) {
+        response.data['body'].forEach((value) {
+          result.add(Trip.fromJson(value));
+          result.last.title = 'Sắp tới';
+        });
+      }
+      return result;
+    });
+  }
+
+  @override
+  Future<List<Trip>> getPastTrips(String driverId) {
+    var endPoint = '${DioProvider.baseUrl}/trip/history/$driverId';
+
+    var dioCall = dioTokenClient.get(endPoint);
+
+    return callApi(dioCall).then((response) {
+      var result = <Trip>[];
+      if (response.data['body'] != null) {
+        response.data['body'].forEach((value) {
+          result.add(Trip.fromJson(value));
+          result.last.title = 'Đã qua';
+        });
+      }
+      return result;
+    });
   }
 }

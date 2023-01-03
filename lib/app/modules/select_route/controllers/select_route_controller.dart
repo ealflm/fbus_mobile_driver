@@ -521,7 +521,7 @@ class SelectRouteController extends GetxController {
         bounds.extend(point);
       }
 
-      bounds = MapUtils.padTop(bounds, 0.3, 0.92);
+      bounds = MapUtils.padBottom(bounds, 0.3, 0.92);
 
       hyperMapController.centerZoomFitBounds(bounds);
     }
@@ -536,7 +536,7 @@ class SelectRouteController extends GetxController {
         bounds.extend(point);
       }
 
-      bounds = MapUtils.padTop(bounds, 0.3, 0.92);
+      bounds = MapUtils.padBottom(bounds, 0.3, 0.92);
 
       hyperMapController.centerZoomFitBounds(bounds);
     }

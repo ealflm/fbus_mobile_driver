@@ -69,7 +69,7 @@ class NotificationService {
 
   static void reloadData() {
     Get.find<NotificationController>().fetchNotifications();
-    Get.find<TicketController>().ticketDataService.fetchTickets();
+    Get.find<TicketController>().tripDataService.fetch();
     Get.find<HomeTicketDataService>().fetchTicket();
     Get.find<StatisticDataService>().fetch();
   }
