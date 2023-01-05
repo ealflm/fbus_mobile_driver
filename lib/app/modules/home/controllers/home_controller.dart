@@ -36,7 +36,7 @@ class HomeController extends GetxController {
             child: Column(
               children: [
                 Text(
-                  'Thống kê theo tháng',
+                  'Thống kê theo tuần',
                   style: subtitle2.copyWith(
                     fontWeight: FontWeights.light,
                     color: AppColors.lightBlack,
@@ -49,13 +49,13 @@ class HomeController extends GetxController {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     _summarizeLabel(
-                        '${statisticDataService.statistic?.studentTripCount ?? 0} vé',
-                        'Đã đặt'),
+                        '${statisticDataService.statistic?.tripCount ?? 0} chuyến',
+                        'Đã đi'),
                     _summarizeLabel(
-                        '${(statisticDataService.statistic?.studentTripNotUseCount ?? 0)} vé',
-                        'Đã quét'),
+                        '${(statisticDataService.statistic?.tripNotUseCount ?? 0)} chuyến',
+                        'Sắp tới'),
                     _summarizeLabel(
-                        '${statisticDataService.statistic?.distance ?? 0} km',
+                        '${statisticDataService.statistic?.distanceStr ?? 0} km',
                         'Đã đi'),
                   ],
                 ),
