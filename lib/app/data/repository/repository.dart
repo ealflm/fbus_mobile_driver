@@ -56,4 +56,8 @@ abstract class Repository {
 
   // Fetch student count list
   Future<List<StudentCount>> getStudentCounts(String tripId);
+
+  // Change password
+  Future<void> changePassword(
+      String phoneNumber, String oldPassword, String newPassword);
 }

@@ -376,4 +376,18 @@ class RepositoryImpl extends BaseRepository implements Repository {
       return result;
     });
   }
+
+  @override
+  Future<void> changePassword(
+      String phoneNumber, String oldPassword, String newPassword) {
+    var endpoint = '${DioProvider.baseUrl}/change-password';
+    var data = {
+      'username': phoneNumber,
+      'oldPassowrd': oldPassword,
+      'newPassword': newPassword,
+    };
+    var dioCall = dioTokenClient.put(endpoint, data: data);
+
+    return callApi(dioCall);
+  }
 }

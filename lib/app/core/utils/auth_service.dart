@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../data/models/driver_model.dart';
 import '../../routes/app_pages.dart';
 import '../base/base_controller.dart';
-import '../widget/shared.dart';
+import '../widget/hyper_dialog.dart';
 import 'notification_service.dart';
 
 class AuthService extends BaseController {
@@ -62,7 +62,12 @@ class AuthService extends BaseController {
         NotificationService.registerNotification();
       },
       onError: (exception) {
-        showToast('Không thể kết nối');
+        HyperDialog.show(
+          title: 'Đăng nhập thất bại',
+          content:
+              'Số điện thoại hoặc mã PIN bạn vừa nhập chưa chính xác. Vui lòng thử lại',
+          primaryButtonText: 'OK',
+        );
       },
     );
 

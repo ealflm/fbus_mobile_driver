@@ -4,6 +4,8 @@ import '../modules/account/bindings/account_binding.dart';
 import '../modules/account/views/account_view.dart';
 import '../modules/booking/bindings/booking_binding.dart';
 import '../modules/booking/views/booking_view.dart';
+import '../modules/change_password/bindings/change_password_binding.dart';
+import '../modules/change_password/views/change_password_view.dart';
 import '../modules/confirm_ticket/bindings/confirm_ticket_binding.dart';
 import '../modules/confirm_ticket/views/confirm_ticket_view.dart';
 import '../modules/current_trip/bindings/current_trip_binding.dart';
@@ -127,6 +129,12 @@ class AppPages {
       name: _Paths.TICKET_DETAIL,
       page: () => const TicketDetailView(),
       binding: TicketDetailBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.CHANGE_PASSWORD,
+      page: () => const ChangePasswordView(),
+      binding: ChangePasswordBinding(),
       transition: Transition.noTransition,
     ),
   ];

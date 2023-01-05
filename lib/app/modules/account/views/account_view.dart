@@ -11,6 +11,7 @@ import '../../../core/values/app_svg_assets.dart';
 import '../../../core/values/font_weights.dart';
 import '../../../core/values/text_styles.dart';
 import '../../../core/widget/status_bar.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/account_controller.dart';
 import '../widgets/account_item.dart';
 
@@ -93,11 +94,13 @@ class AccountView extends GetView<AccountController> {
                           text: 'Tài khoản của tôi',
                           color: AppColors.blue,
                         ),
-                        const AccountItem(
-                          icon: Icons.key,
-                          text: 'Đổi mã PIN',
-                          color: AppColors.green,
-                        ),
+                        AccountItem(
+                            icon: Icons.key,
+                            text: 'Đổi mã PIN',
+                            color: AppColors.green,
+                            onPressed: () {
+                              Get.toNamed(Routes.CHANGE_PASSWORD);
+                            }),
                       ],
                     ),
                   ),
