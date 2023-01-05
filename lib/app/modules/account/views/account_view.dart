@@ -93,6 +93,11 @@ class AccountView extends GetView<AccountController> {
                           text: 'Tài khoản của tôi',
                           color: AppColors.blue,
                         ),
+                        const AccountItem(
+                          icon: Icons.key,
+                          text: 'Đổi mã PIN',
+                          color: AppColors.green,
+                        ),
                       ],
                     ),
                   ),
@@ -115,7 +120,7 @@ class AccountView extends GetView<AccountController> {
                           height: 5.h,
                         ),
                         AccountItem(
-                          onPress: () {
+                          onPressed: () {
                             AuthService.logout();
                           },
                           icon: Icons.power_settings_new,

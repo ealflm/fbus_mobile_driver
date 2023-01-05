@@ -11,19 +11,19 @@ class AccountItem extends StatelessWidget {
     required this.text,
     required this.color,
     this.child,
-    this.onPress,
+    this.onPressed,
   }) : super(key: key);
 
   final IconData icon;
   final String text;
   final Color color;
   final Widget? child;
-  final Function()? onPress;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onPress ?? () {},
+      onTap: onPressed ?? () {},
       child: Ink(
         height: 44.h,
         child: Row(
