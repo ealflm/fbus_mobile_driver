@@ -1,3 +1,4 @@
+import 'package:fbus_mobile_driver/app/data/models/student_count_model.dart';
 import 'package:fbus_mobile_driver/app/data/models/trip_model.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
@@ -353,6 +354,23 @@ class RepositoryImpl extends BaseRepository implements Repository {
         response.data['body'].forEach((value) {
           result.add(Trip.fromJson(value));
           result.last.title = 'Đã qua';
+        });
+      }
+      return result;
+    });
+  }
+
+  @override
+  Future<List<StudentCount>> getStudentCounts(String tripId) {
+    var endPoint = '${DioProvider.baseUrl}/trip/studentTrip/$tripId';
+
+    var dioCall = dioTokenClient.get(endPoint);
+
+    return callApi(dioCall).then((response) {
+      var result = <StudentCount>[];
+      if (response.data['body'] != null) {
+        response.data['body'].forEach((value) {
+          result.add(StudentCount.fromJson(value));
         });
       }
       return result;

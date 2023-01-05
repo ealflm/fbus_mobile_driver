@@ -60,7 +60,7 @@ class MainView extends GetView<MainController> {
                       state: controller.currentTab.value == 0,
                     ),
                     NavButton(
-                      title: 'Vé của tôi',
+                      title: 'Lịch trình',
                       icon: Icons.confirmation_number,
                       iconOutlined: Icons.confirmation_number_outlined,
                       onPressed: () {

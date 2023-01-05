@@ -200,8 +200,8 @@ class HomeView extends GetView<HomeController> {
                                       iconColor: AppColors.red,
                                     ),
                                     _mainButton(
-                                      text: 'Vé của tôi',
-                                      icon: Icons.confirmation_number_outlined,
+                                      text: 'Lịch trình',
+                                      icon: Icons.insert_invitation,
                                       iconColor: AppColors.hardBlue,
                                       onPressed: () {
                                         Get.offAllNamed(

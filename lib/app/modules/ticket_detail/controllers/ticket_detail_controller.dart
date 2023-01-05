@@ -14,9 +14,9 @@ import '../../../core/values/text_styles.dart';
 import '../../../core/widget/shared.dart';
 import '../../../core/widget/trip_item.dart';
 import '../../../data/models/station_model.dart';
+import '../../../data/models/student_count_model.dart';
 import '../../../data/models/student_trip_model.dart';
 import '../../../data/models/trip_model.dart';
-import '../../../routes/app_pages.dart';
 import '../../home/controllers/home_ticket_data_service.dart';
 import '../../map/hyper_map_controller.dart';
 
@@ -50,7 +50,18 @@ class TicketDetailController extends BaseController {
     _points.value = value;
   }
 
+  final Rx<Map<String, int>> _studentNumberInStations =
+      Rx<Map<String, int>>({});
+  Map<String, int> get studentNumberInStations =>
+      _studentNumberInStations.value;
+  set studentNumberInStations(Map<String, int> value) {
+    _studentNumberInStations.value = value;
+  }
+
   HyperMapController hyperMapController = HyperMapController();
+
+  HomeTicketDataService homeTicketDataService =
+      Get.find<HomeTicketDataService>();
 
   @override
   void onInit() {
@@ -71,11 +82,29 @@ class TicketDetailController extends BaseController {
   void onMapReady() async {
     await hyperMapController.refreshCurrentLocation();
     await fetchPoints();
+    fetchStudentNumber();
     moveScreenToTicketPolyline();
   }
 
-  HomeTicketDataService homeTicketDataService =
-      Get.find<HomeTicketDataService>();
+  Future<void> fetchStudentNumber() async {
+    if (trip?.id == null) return;
+    var studentCountsService = repository.getStudentCounts(trip?.id ?? '');
+    List<StudentCount> studentCounts = [];
+
+    await callDataService(studentCountsService, onSuccess: (response) {
+      studentCounts = response;
+    });
+
+    Map<String, int> result = {};
+
+    for (StudentCount studentCount in studentCounts) {
+      if (studentCount.station?.id != null) {
+        result[studentCount.station?.id ?? ''] = studentCount.count ?? 0;
+      }
+    }
+
+    studentNumberInStations = result;
+  }
 
   Future<void> fetchPoints() async {
     points = await goongRepository
@@ -94,7 +123,7 @@ class TicketDetailController extends BaseController {
   }
 
   Widget ticketDetail() {
-    return Obx((() {
+    return Obx(() {
       return Container(
         alignment: Alignment.bottomCenter,
         margin: EdgeInsets.only(bottom: 20.h),
@@ -128,7 +157,7 @@ class TicketDetailController extends BaseController {
           ],
         ),
       );
-    }));
+    });
   }
 
   Widget ticketItem(Trip trip) {
@@ -160,15 +189,23 @@ class TicketDetailController extends BaseController {
   }
 
   Widget _stationItem(Station station) {
-    return _selectItem(
-      onPressed: () {
-        selectedStationId = station.id;
-        moveScreenToSelectedStation();
-      },
-      isSelected: station.id == selectedStationId,
-      name: station.name,
-      description: '5 người',
-    );
+    return Obx(() {
+      String description = '';
+      var studentNumber = studentNumberInStations[station.id];
+      if (studentNumber != null) {
+        description = '$studentNumber người';
+      }
+
+      return _selectItem(
+        onPressed: () {
+          selectedStationId = station.id;
+          moveScreenToSelectedStation();
+        },
+        isSelected: station.id == selectedStationId,
+        name: station.name,
+        description: description,
+      );
+    });
   }
 
   Widget _selectItem(
@@ -332,7 +369,7 @@ class TicketDetailController extends BaseController {
                             ),
                           ),
                           Text(
-                            'Số người cần đón: 5',
+                            'Số người cần đón: ${studentNumberInStations[station.id] ?? 0}',
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: caption.copyWith(
@@ -386,7 +423,7 @@ class TicketDetailController extends BaseController {
       var bounds = LatLngBounds();
       bounds.extend(selectedStation?.location!);
 
-      bounds = MapUtils.padBottomSinglePoint(bounds, 0.028, 0.042);
+      bounds = MapUtils.padBottomSinglePoint(bounds, 0.03, 0.042);
 
       hyperMapController.centerZoomFitBounds(bounds);
     }

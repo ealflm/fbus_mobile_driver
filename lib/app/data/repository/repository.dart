@@ -2,6 +2,7 @@ import '../models/notification_model.dart';
 import '../models/route_model.dart';
 import '../models/selected_trip_model.dart';
 import '../models/statistic_model.dart';
+import '../models/student_count_model.dart';
 import '../models/student_trip_model.dart';
 import '../models/trip_model.dart';
 import '../models/tripx_model.dart';
@@ -52,4 +53,7 @@ abstract class Repository {
 
   // Fetch past trips
   Future<List<Trip>> getPastTrips(String driverId);
+
+  // Fetch student count list
+  Future<List<StudentCount>> getStudentCounts(String tripId);
 }

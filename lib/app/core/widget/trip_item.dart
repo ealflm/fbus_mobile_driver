@@ -1,12 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
-import '../../data/models/station_model.dart';
 import '../../data/models/trip_model.dart';
 import '../values/app_colors.dart';
-import '../values/app_svg_assets.dart';
 import '../values/font_weights.dart';
 import '../values/text_styles.dart';
 
@@ -221,6 +217,103 @@ class TripItem extends StatelessWidget {
   Widget _more(Color backgroundColor, Color textColor) {
     return Column(
       children: [
+        const Divider(),
+        Container(
+          margin: EdgeInsets.symmetric(horizontal: 15.w),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Biển số xe',
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeights.regular,
+                          letterSpacing: 0.0025.sp,
+                        ),
+                      ),
+                      Text(
+                        '${trip.bus?.licensePlates}',
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeights.medium,
+                          letterSpacing: 0.0025.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Màu sắc',
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeights.regular,
+                          letterSpacing: 0.0025.sp,
+                        ),
+                      ),
+                      Text(
+                        '${trip.bus?.color}',
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeights.medium,
+                          letterSpacing: 0.0025.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Số ghế',
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeights.regular,
+                          letterSpacing: 0.0025.sp,
+                        ),
+                      ),
+                      Text(
+                        '${trip.bus?.seat}',
+                        style: TextStyle(
+                          color: textColor,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeights.medium,
+                          letterSpacing: 0.0025.sp,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
         const Divider(),
         Container(
           height: 0.25.sh,
