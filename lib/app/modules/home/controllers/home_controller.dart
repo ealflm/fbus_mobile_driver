@@ -7,14 +7,14 @@ import '../../../core/values/app_animation_assets.dart';
 import '../../../core/values/app_colors.dart';
 import '../../../core/values/font_weights.dart';
 import '../../../core/values/text_styles.dart';
-import '../../../core/widget/ticket_item.dart';
-import '../../../data/models/student_trip_model.dart';
+import '../../../core/widget/trip_item.dart';
+import '../../../data/models/trip_model.dart';
 import '../../../routes/app_pages.dart';
 import 'home_ticket_data_service.dart';
 import 'statistic_data_service.dart';
 
 class HomeController extends GetxController {
-  HomeTicketDataService ticketDataService = Get.find<HomeTicketDataService>();
+  HomeTripDataService ticketDataService = Get.find<HomeTripDataService>();
   StatisticDataService statisticDataService = Get.find<StatisticDataService>();
 
   Widget statistic() {
@@ -96,17 +96,11 @@ class HomeController extends GetxController {
             ),
           );
         }
-        if (ticketDataService.ticket == null) return Container();
-        Ticket ticket = ticketDataService.ticket!;
+        if (ticketDataService.trip == null) return Container();
+        Trip trip = ticketDataService.trip!;
         return Column(
           children: [
-            ticketItem(
-              ticket,
-              title: ticket.status == 1 ? 'Chuyến đi gần nhất' : 'Đang diễn ra',
-              backgroundColor:
-                  ticket.status == 1 ? AppColors.purple500 : AppColors.green,
-              textColor: ticket.status == 1 ? AppColors.white : AppColors.white,
-            ),
+            ticketItem(trip),
             SizedBox(height: 15.h),
           ],
         );
@@ -114,23 +108,30 @@ class HomeController extends GetxController {
     );
   }
 
-  Widget ticketItem(
-    Ticket ticket, {
-    String title = '',
-    Color backgroundColor = AppColors.white,
-    Color textColor = AppColors.softBlack,
-  }) {
+  Widget ticketItem(Trip trip) {
+    Color backgroundColor = AppColors.white;
+    Color textColor = AppColors.softBlack;
+
+    if (trip.isCurrent) {
+      trip.title = 'Chuyến đi hiện tại';
+      backgroundColor = AppColors.green;
+      textColor = AppColors.white;
+    } else if (trip.title == 'Đã qua') {
+      backgroundColor = AppColors.caption;
+      textColor = AppColors.white;
+    }
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(left: 15.w, right: 15.w),
-      child: TicketItem(
-        title: title,
-        ticket: ticket,
-        state: TicketItemExpandedState.less,
+      child: TripItem(
+        title: trip.title,
+        trip: trip,
+        state: TripItemExpandedState.less,
         backgroundColor: backgroundColor,
         textColor: textColor,
         onPressed: () {
-          Get.toNamed(Routes.TICKET_DETAIL, arguments: {'ticket': ticket});
+          Get.toNamed(Routes.TICKET_DETAIL, arguments: {'trip': trip});
         },
       ),
     );

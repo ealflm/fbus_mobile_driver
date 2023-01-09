@@ -34,7 +34,7 @@ abstract class Repository {
   Future<List<Ticket>> getTickets(String driverId);
 
   /// Get current Ticket
-  Future<Ticket?> getCurrentTicket(String driverId);
+  Future<Trip?> getCurrentTrip(String driverId);
 
   /// Get current Ticket
   Future<Statistic> getStatistic(String driverId);

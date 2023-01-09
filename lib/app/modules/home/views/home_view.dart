@@ -77,7 +77,7 @@ class HomeView extends GetView<HomeController> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Xin chào',
+                                        'Xin chào tài xế',
                                         style: body2.copyWith(
                                           color: AppColors.white,
                                         ),

@@ -43,8 +43,7 @@ class TicketController extends GetxController
     super.onInit();
   }
 
-  HomeTicketDataService homeTicketDataService =
-      Get.find<HomeTicketDataService>();
+  HomeTripDataService homeTripDataService = Get.find<HomeTripDataService>();
 
   Widget pastTickets() {
     return Obx(
@@ -114,7 +113,11 @@ class TicketController extends GetxController
     Color backgroundColor = AppColors.white;
     Color textColor = AppColors.softBlack;
 
-    if (trip.title == 'Đã qua') {
+    if (trip.id == homeTripDataService.trip?.id) {
+      trip.title = 'Chuyến đi hiện tại';
+      backgroundColor = AppColors.green;
+      textColor = AppColors.white;
+    } else if (trip.title == 'Đã qua') {
       backgroundColor = AppColors.caption;
       textColor = AppColors.white;
     }

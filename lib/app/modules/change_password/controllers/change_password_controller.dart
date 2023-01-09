@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../../../core/base/base_controller.dart';
 import '../../../core/utils/auth_service.dart';
 import '../../../core/widget/hyper_dialog.dart';
-import '../../../routes/app_pages.dart';
 
 class ChangePasswordController extends BaseController {
   final formKey = GlobalKey<FormState>();

@@ -16,6 +16,7 @@ class Trip {
   int? status;
   num? rate;
   String? title;
+  bool isCurrent = false;
 
   String get dateStr {
     if (date == null) return '';

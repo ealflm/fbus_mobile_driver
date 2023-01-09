@@ -11,7 +11,7 @@ import '../../ticket/views/ticket_view.dart';
 class MainController extends GetxController {
   @override
   void onInit() {
-    Get.put(HomeTicketDataService());
+    Get.put(HomeTripDataService());
     Get.put(StatisticDataService());
     Map<String, dynamic> arg = {};
     if (Get.arguments != null) {

@@ -60,8 +60,7 @@ class TicketDetailController extends BaseController {
 
   HyperMapController hyperMapController = HyperMapController();
 
-  HomeTicketDataService homeTicketDataService =
-      Get.find<HomeTicketDataService>();
+  HomeTripDataService homeTripDataService = Get.find<HomeTripDataService>();
 
   @override
   void onInit() {
@@ -164,7 +163,11 @@ class TicketDetailController extends BaseController {
     Color backgroundColor = AppColors.white;
     Color textColor = AppColors.softBlack;
 
-    if (trip.title == 'Đã qua') {
+    if (trip.id == homeTripDataService.trip?.id) {
+      trip.title = 'Chuyến đi hiện tại';
+      backgroundColor = AppColors.green;
+      textColor = AppColors.white;
+    } else if (trip.title == 'Đã qua') {
       backgroundColor = AppColors.caption;
       textColor = AppColors.white;
     }
