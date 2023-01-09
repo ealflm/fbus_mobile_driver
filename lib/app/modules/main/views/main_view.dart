@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../core/values/app_colors.dart';
+import '../../../core/widget/hyper_dialog.dart';
 import '../../../routes/app_pages.dart';
+import '../../home/controllers/home_ticket_data_service.dart';
 import '../controllers/main_controller.dart';
 import '../widgets/nav_button.dart';
 
@@ -32,7 +34,17 @@ class MainView extends GetView<MainController> {
               size: 30.r,
             ),
             onPressed: () {
-              Get.toNamed(Routes.SCAN);
+              HomeTripDataService homeTripDataService =
+                  Get.find<HomeTripDataService>();
+              if (homeTripDataService.trip?.isCurrent == true) {
+                Get.toNamed(Routes.QR_CODE);
+              } else {
+                HyperDialog.show(
+                    title: 'Chưa khả dụng',
+                    content:
+                        'Tính năng tạo QR Code sẽ được mở khi bạn bắt đầu một chuyến đi',
+                    primaryButtonText: 'OK');
+              }
             },
           ),
         ),

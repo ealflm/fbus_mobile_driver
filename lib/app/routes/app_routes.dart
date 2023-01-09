@@ -20,6 +20,7 @@ abstract class Routes {
   static const SELECT_TRIP = _Paths.SELECT_TRIP;
   static const TICKET_DETAIL = _Paths.TICKET_DETAIL;
   static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
+  static const QR_CODE = _Paths.QR_CODE;
 }
 
 abstract class _Paths {
@@ -39,4 +40,5 @@ abstract class _Paths {
   static const SELECT_TRIP = '/select-trip';
   static const TICKET_DETAIL = '/ticket-detail';
   static const CHANGE_PASSWORD = '/change-password';
+  static const QR_CODE = '/qr-code';
 }

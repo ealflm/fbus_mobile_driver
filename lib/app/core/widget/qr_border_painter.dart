@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../values/app_colors.dart';
-
-class QRPainter extends CustomPainter {
+class QRBoderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    var width = 4.0;
-    var radius = 15.0;
+    var width = 5.0;
+    var radius = 25.0;
     final tRadius = 2 * radius;
     final rect = Rect.fromLTWH(
       width,
@@ -51,7 +49,7 @@ class QRPainter extends CustomPainter {
     canvas.drawRRect(
       rrect,
       Paint()
-        ..color = AppColors.primary400
+        ..color = Colors.white
         ..style = PaintingStyle.stroke
         ..strokeWidth = width,
     );

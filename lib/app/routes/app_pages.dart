@@ -20,6 +20,8 @@ import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_view.dart';
 import '../modules/notification/bindings/notification_binding.dart';
 import '../modules/notification/views/notification_view.dart';
+import '../modules/qr_code/bindings/qr_code_binding.dart';
+import '../modules/qr_code/views/qr_code_view.dart';
 import '../modules/scan/bindings/scan_binding.dart';
 import '../modules/scan/views/scan_view.dart';
 import '../modules/search/bindings/search_binding.dart';
@@ -135,6 +137,12 @@ class AppPages {
       name: _Paths.CHANGE_PASSWORD,
       page: () => const ChangePasswordView(),
       binding: ChangePasswordBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.QR_CODE,
+      page: () => const QrCodeView(),
+      binding: QrCodeBinding(),
       transition: Transition.noTransition,
     ),
   ];
