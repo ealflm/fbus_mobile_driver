@@ -38,31 +38,31 @@ class AccountView extends GetView<AccountController> {
                         ClipOval(
                           child: SizedBox.fromSize(
                             size: Size.fromRadius(50.r), // Image radius
-                            child:
-                                // Obx(
-                                //   () =>
-                                CachedNetworkImage(
-                              fadeInDuration: const Duration(),
-                              fadeOutDuration: const Duration(),
-                              placeholder: (context, url) {
-                                return SvgPicture.asset(AppSvgAssets.male);
-                              },
-                              imageUrl: AuthService.driver?.photoUrl ?? '',
-                              fit: BoxFit.cover,
-                              errorWidget: (context, url, error) {
-                                return SvgPicture.asset(AppSvgAssets.male);
-                              },
+                            child: Obx(
+                              () => CachedNetworkImage(
+                                fadeInDuration: const Duration(),
+                                fadeOutDuration: const Duration(),
+                                placeholder: (context, url) {
+                                  return SvgPicture.asset(AppSvgAssets.male);
+                                },
+                                imageUrl: AuthService.driver?.photoUrl ?? '',
+                                fit: BoxFit.cover,
+                                errorWidget: (context, url, error) {
+                                  return SvgPicture.asset(AppSvgAssets.male);
+                                },
+                              ),
                             ),
-                            // ),
                           ),
                         ),
                         SizedBox(
                           height: 15.h,
                         ),
-                        Text(
-                          '${AuthService.driver?.fullName}',
-                          style: h6.copyWith(
-                              fontWeight: FontWeights.bold, fontSize: 19.sp),
+                        Obx(
+                          () => Text(
+                            '${AuthService.driver?.fullName}',
+                            style: h6.copyWith(
+                                fontWeight: FontWeights.bold, fontSize: 19.sp),
+                          ),
                         ),
                       ],
                     ),
@@ -89,11 +89,13 @@ class AccountView extends GetView<AccountController> {
                         SizedBox(
                           height: 5.h,
                         ),
-                        const AccountItem(
-                          icon: Icons.person,
-                          text: 'Tài khoản của tôi',
-                          color: AppColors.blue,
-                        ),
+                        AccountItem(
+                            icon: Icons.person,
+                            text: 'Tài khoản của tôi',
+                            color: AppColors.blue,
+                            onPressed: () {
+                              Get.toNamed(Routes.ACCOUNT_DETAIL);
+                            }),
                         AccountItem(
                             icon: Icons.key,
                             text: 'Đổi mã PIN',

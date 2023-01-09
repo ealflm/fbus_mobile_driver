@@ -51,20 +51,23 @@ class HomeView extends GetView<HomeController> {
                                     child: SizedBox.fromSize(
                                       size:
                                           Size.fromRadius(18.r), // Image radius
-                                      child: CachedNetworkImage(
-                                        fadeInDuration: const Duration(),
-                                        fadeOutDuration: const Duration(),
-                                        placeholder: (context, url) {
-                                          return SvgPicture.asset(
-                                              AppSvgAssets.male);
-                                        },
-                                        imageUrl:
-                                            AuthService.driver?.photoUrl ?? '',
-                                        fit: BoxFit.cover,
-                                        errorWidget: (context, url, error) {
-                                          return SvgPicture.asset(
-                                              AppSvgAssets.male);
-                                        },
+                                      child: Obx(
+                                        () => CachedNetworkImage(
+                                          fadeInDuration: const Duration(),
+                                          fadeOutDuration: const Duration(),
+                                          placeholder: (context, url) {
+                                            return SvgPicture.asset(
+                                                AppSvgAssets.male);
+                                          },
+                                          imageUrl:
+                                              AuthService.driver?.photoUrl ??
+                                                  '',
+                                          fit: BoxFit.cover,
+                                          errorWidget: (context, url, error) {
+                                            return SvgPicture.asset(
+                                                AppSvgAssets.male);
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -82,11 +85,13 @@ class HomeView extends GetView<HomeController> {
                                           color: AppColors.white,
                                         ),
                                       ),
-                                      Text(
-                                        '${AuthService.driver?.fullName}',
-                                        style: subtitle1.copyWith(
-                                          fontWeight: FontWeights.medium,
-                                          color: AppColors.white,
+                                      Obx(
+                                        () => Text(
+                                          '${AuthService.driver?.fullName}',
+                                          style: subtitle1.copyWith(
+                                            fontWeight: FontWeights.medium,
+                                            color: AppColors.white,
+                                          ),
                                         ),
                                       ),
                                     ],

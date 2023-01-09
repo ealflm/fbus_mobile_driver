@@ -13,9 +13,8 @@ class Driver {
     id = json['driverId'];
     fullName = json['fullName'];
     phone = json['phone'];
-    photoUrl = AppSettings.get('driverPhotoUrlHost') +
-        '/' +
-        (json['photoUrl'] ?? '').trim();
+    var photos = (json['photoUrl'] ?? '').trim().split(' ');
+    photoUrl = AppSettings.get('driverPhotoUrlHost') + '/' + photos.last ?? '';
     address = json['address'];
   }
 
@@ -23,9 +22,18 @@ class Driver {
     id = json['DriverId'];
     fullName = json['FullName'];
     phone = json['Phone'];
-    photoUrl = AppSettings.get('driverPhotoUrlHost') +
-        '/' +
-        (json['PhotoUrl'] ?? '').trim();
+    var photos = (json['PhotoUrl'] ?? '').trim().split(' ');
+    photoUrl = AppSettings.get('driverPhotoUrlHost') + '/' + photos.last ?? '';
     address = json['Address'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['driverId'] = id;
+    data['fullName'] = fullName;
+    data['phone'] = phone;
+    data['photoUrl'] = photoUrl;
+    data['address'] = address;
+    return data;
   }
 }

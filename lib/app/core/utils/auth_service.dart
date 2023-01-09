@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decode/jwt_decode.dart';
@@ -15,6 +17,12 @@ class AuthService extends BaseController {
   AuthService._internal();
 
   String? _token;
+
+  static final Rx<Driver?> _driver = Rx<Driver?>(null);
+  static Driver? get driver => _driver.value;
+  static set driver(Driver? value) {
+    _driver.value = value;
+  }
 
   /// Get token.
   ///
@@ -34,19 +42,43 @@ class AuthService extends BaseController {
     return _instance._token;
   }
 
-  /// Get driver model
-  static Driver? get driver {
+  static Future<void> loadDriver() async {
+    var prefs = await SharedPreferences.getInstance();
+    String? jsonString = prefs.getString('driver');
+    if (jsonString != null) {
+      Map<String, dynamic> driverJson = jsonDecode(jsonString);
+      driver = Driver.fromJson(driverJson);
+    }
+  }
+
+  static Future<void> loadDriverFromToken() async {
     Map<String, dynamic> payload = Jwt.parseJwt(token.toString());
 
     if (payload.isNotEmpty) {
-      return Driver.fromJsonCapitalizeFirstLetter(payload);
+      driver = Driver.fromJsonCapitalizeFirstLetter(payload);
+      setDriver(driver);
     }
-    return null;
+  }
+
+  static Future<void> setDriver(Driver? driver) async {
+    _driver.value = driver;
+    var prefs = await SharedPreferences.getInstance();
+
+    var driverJson = driver?.toJson();
+    String jsonString = jsonEncode(driverJson);
+
+    await prefs.setString('driver', jsonString);
+  }
+
+  static Future<void> clearDriver() async {
+    var prefs = await SharedPreferences.getInstance();
+    await prefs.remove('driver');
   }
 
   static Future<void> init() async {
     var prefs = await SharedPreferences.getInstance();
     _instance._token = prefs.getString('token');
+    loadDriver();
   }
 
   static Future<bool> login(String phoneNumber, String password) async {
@@ -72,7 +104,8 @@ class AuthService extends BaseController {
     );
 
     if (token != null) {
-      saveToken(token);
+      await saveToken(token);
+      await loadDriverFromToken();
       result = true;
       Get.offAllNamed(Routes.MAIN);
     }
@@ -99,5 +132,6 @@ class AuthService extends BaseController {
     var prefs = await SharedPreferences.getInstance();
     _instance._token = null;
     await prefs.remove('token');
+    clearDriver();
   }
 }

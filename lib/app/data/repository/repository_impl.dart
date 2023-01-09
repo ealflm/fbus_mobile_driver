@@ -1,17 +1,19 @@
-import 'package:fbus_mobile_driver/app/data/models/student_count_model.dart';
-import 'package:fbus_mobile_driver/app/data/models/trip_model.dart';
-import 'package:get/get.dart';
+import 'package:dio/dio.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:latlong2/latlong.dart';
 
 import '../../core/base/base_repository.dart';
 import '../../network/dio_provider.dart';
 import '../models/direction_model.dart';
+import '../models/driver_model.dart';
 import '../models/notification_model.dart';
 import '../models/route_model.dart';
 import '../models/selected_trip_model.dart';
 import '../models/station_model.dart';
 import '../models/statistic_model.dart';
+import '../models/student_count_model.dart';
 import '../models/student_trip_model.dart';
+import '../models/trip_model.dart';
 import '../models/tripx_model.dart';
 import 'goong_repository.dart';
 import 'repository.dart';
@@ -348,6 +350,37 @@ class RepositoryImpl extends BaseRepository implements Repository {
       'newPassword': newPassword,
     };
     var dioCall = dioTokenClient.put(endpoint, data: data);
+
+    return callApi(dioCall);
+  }
+
+  @override
+  Future<Driver> getProfile(String driverId) {
+    var endPoint = '${DioProvider.baseUrl}/profile/$driverId';
+
+    var dioCall = dioTokenClient.get(endPoint);
+
+    return callApi(dioCall).then((response) {
+      return Driver.fromJson(response.data['body']['driver']);
+    });
+  }
+
+  @override
+  Future<void> updateProfile(Driver driver, MultipartFile? image) {
+    var endpoint = '${DioProvider.baseUrl}/profile/${driver.id}';
+
+    Map<String, dynamic> data = {
+      'FullName': driver.fullName,
+      'Address': driver.address,
+    };
+
+    if (image != null) {
+      data['UploadFile'] = image;
+    }
+
+    var formData = FormData.fromMap(data);
+
+    var dioCall = dioTokenClient.put(endpoint, data: formData);
 
     return callApi(dioCall);
   }

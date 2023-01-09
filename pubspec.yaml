@@ -13,7 +13,7 @@ dependencies:
 
   flutter_screenutil: ^5.5.4
   flutter_svg: ^0.22.0
-  dio: ^4.0.4
+  dio: ^4.0.6
   shared_preferences: ^2.0.10
   flutter_localizations:
     sdk: flutter
@@ -40,21 +40,18 @@ dependencies:
   polyline_do: ^0.1.0
 
   restart_app: ^1.1.0
-
   syncfusion_flutter_calendar: ^20.3.56
   syncfusion_localizations: ^20.3.56
-
   qr_code_scanner: ^1.0.1
-
   tiengviet: ^0.5.0
-
   hyper_polyline: ^0.0.4
-
   lottie: ^2.0.0
-
   table_calendar: ^3.0.8
 
   qr_flutter: ^4.0.0
+  image_picker: ^0.8.6
+
+  mime: ^1.0.3
 
 dev_dependencies:
   flutter_lints: 2.0.1

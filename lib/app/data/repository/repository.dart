@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+
+import '../models/driver_model.dart';
 import '../models/notification_model.dart';
 import '../models/route_model.dart';
 import '../models/selected_trip_model.dart';
@@ -60,4 +63,10 @@ abstract class Repository {
   // Change password
   Future<void> changePassword(
       String phoneNumber, String oldPassword, String newPassword);
+
+  // Get driver profile
+  Future<Driver> getProfile(String driverId);
+
+  // Update driver profile
+  Future<void> updateProfile(Driver driver, MultipartFile? image);
 }
