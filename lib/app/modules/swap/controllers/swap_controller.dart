@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../../../core/base/base_controller.dart';
 import '../../../core/utils/auth_service.dart';
-import '../../../core/utils/notification_service.dart';
 import '../../../core/widget/hyper_dialog.dart';
 
 class SwapController extends BaseController {

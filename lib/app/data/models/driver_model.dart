@@ -6,6 +6,7 @@ class Driver {
   String? phone;
   String? photoUrl;
   String? address;
+  int? status;
 
   Driver({this.id, this.fullName, this.phone, this.photoUrl, this.address});
 
@@ -16,6 +17,7 @@ class Driver {
     var photos = (json['photoUrl'] ?? '').trim().split(' ');
     photoUrl = AppSettings.get('driverPhotoUrlHost') + '/' + photos.last ?? '';
     address = json['address'];
+    status = json['status'];
   }
 
   Driver.fromJsonCapitalizeFirstLetter(Map<String, dynamic> json) {
@@ -25,6 +27,7 @@ class Driver {
     var photos = (json['PhotoUrl'] ?? '').trim().split(' ');
     photoUrl = AppSettings.get('driverPhotoUrlHost') + '/' + photos.last ?? '';
     address = json['Address'];
+    status = json['Status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -34,6 +37,7 @@ class Driver {
     data['phone'] = phone;
     data['photoUrl'] = photoUrl;
     data['address'] = address;
+    data['status'] = status;
     return data;
   }
 }

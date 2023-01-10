@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide Route;
 import 'package:intl/intl.dart';
 
+import '../../core/utils/auth_service.dart';
 import '../../core/utils/utils.dart';
 import '../../core/values/app_colors.dart';
 import 'bus_model.dart';
@@ -34,7 +35,11 @@ class Trip {
       } else if (now.compareTo(endDate!) > 0) {
         return 'Chuyến đi đã qua';
       } else {
-        return 'Đang diễn ra';
+        if (AuthService.driver?.status == 3) {
+          return 'Đang diễn ra';
+        } else {
+          return 'Chưa điểm danh';
+        }
       }
     } else {
       return '';
@@ -53,6 +58,8 @@ class Trip {
         return AppColors.caption;
       case 'Đang diễn ra':
         return AppColors.green;
+      case 'Chưa điểm danh':
+        return AppColors.purple600;
       default:
         return AppColors.white;
     }
@@ -69,6 +76,8 @@ class Trip {
       case 'Chuyến đi đã qua':
         return AppColors.white;
       case 'Đang diễn ra':
+        return AppColors.white;
+      case 'Chưa điểm danh':
         return AppColors.white;
       default:
         return AppColors.softBlack;
