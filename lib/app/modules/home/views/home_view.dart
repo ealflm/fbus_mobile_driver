@@ -10,6 +10,7 @@ import '../../../core/values/app_png_assets.dart';
 import '../../../core/values/app_svg_assets.dart';
 import '../../../core/values/font_weights.dart';
 import '../../../core/values/text_styles.dart';
+import '../../../core/widget/hyper_dialog.dart';
 import '../../../core/widget/shared.dart';
 import '../../../core/widget/status_bar.dart';
 import '../../../routes/app_pages.dart';
@@ -181,7 +182,18 @@ class HomeView extends GetView<HomeController> {
                                       icon: Icons.qr_code_scanner,
                                       iconColor: AppColors.hardBlue,
                                       onPressed: () {
-                                        Get.toNamed(Routes.QR_CODE);
+                                        if (controller
+                                                .tripDataService.trip?.title ==
+                                            'Đang diễn ra') {
+                                          Get.toNamed(Routes.QR_CODE);
+                                        } else {
+                                          HyperDialog.show(
+                                            title: 'Chưa khả dụng',
+                                            content:
+                                                'Vui lòng điểm danh trước khi sử dụng tính năng này',
+                                            primaryButtonText: 'OK',
+                                          );
+                                        }
                                       },
                                     ),
                                   ],
@@ -217,7 +229,18 @@ class HomeView extends GetView<HomeController> {
                                       icon: Icons.check_circle_outline,
                                       iconColor: AppColors.green,
                                       onPressed: () {
-                                        Get.toNamed(Routes.SCAN);
+                                        if (controller
+                                                .tripDataService.trip?.title ==
+                                            'Đang diễn ra') {
+                                          Get.toNamed(Routes.SCAN);
+                                        } else {
+                                          HyperDialog.show(
+                                            title: 'Chưa khả dụng',
+                                            content:
+                                                'Bạn chỉ có thể điểm danh khi chuyến đi bắt đầu',
+                                            primaryButtonText: 'OK',
+                                          );
+                                        }
                                       },
                                     ),
                                   ],

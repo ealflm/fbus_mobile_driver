@@ -14,7 +14,7 @@ import 'home_ticket_data_service.dart';
 import 'statistic_data_service.dart';
 
 class HomeController extends GetxController {
-  HomeTripDataService ticketDataService = Get.find<HomeTripDataService>();
+  HomeTripDataService tripDataService = Get.find<HomeTripDataService>();
   StatisticDataService statisticDataService = Get.find<StatisticDataService>();
 
   Widget statistic() {
@@ -83,7 +83,7 @@ class HomeController extends GetxController {
   Widget currentTicket() {
     return Obx(
       () {
-        if (ticketDataService.isLoading) {
+        if (tripDataService.isLoading) {
           return Center(
             child: Column(
               children: [
@@ -96,8 +96,8 @@ class HomeController extends GetxController {
             ),
           );
         }
-        if (ticketDataService.trip == null) return Container();
-        Trip trip = ticketDataService.trip!;
+        if (tripDataService.trip == null) return Container();
+        Trip trip = tripDataService.trip!;
         return Column(
           children: [
             ticketItem(trip),

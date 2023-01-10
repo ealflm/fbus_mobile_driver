@@ -36,14 +36,14 @@ class MainView extends GetView<MainController> {
             onPressed: () {
               HomeTripDataService homeTripDataService =
                   Get.find<HomeTripDataService>();
-              if (homeTripDataService.trip?.isCurrent == true) {
+              if (homeTripDataService.trip?.title == 'Đang diễn ra') {
                 Get.toNamed(Routes.QR_CODE);
               } else {
                 HyperDialog.show(
-                    title: 'Chưa khả dụng',
-                    content:
-                        'Tính năng tạo QR Code sẽ được mở khi bạn bắt đầu một chuyến đi',
-                    primaryButtonText: 'OK');
+                  title: 'Chưa khả dụng',
+                  content: 'Vui lòng điểm danh trước khi sử dụng tính năng này',
+                  primaryButtonText: 'OK',
+                );
               }
             },
           ),
