@@ -72,4 +72,7 @@ abstract class Repository {
 
   // encryptString
   Future<String> encodeQR(String content);
+
+  // Send swap request
+  Future<void> requestSwap(String driverId, String tripId, String? content);
 }

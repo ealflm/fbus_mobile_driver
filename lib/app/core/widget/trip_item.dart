@@ -324,6 +324,22 @@ class TripItem extends StatelessWidget {
             ),
           ),
         ),
+        if (trip.startDate != null &&
+            DateTime.now().compareTo(trip.startDate!) < 0)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const Divider(),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                onPressed: actionButtonOnPressed,
+                child: Text(
+                  'Đổi chuyến',
+                  style: subtitle2.copyWith(color: AppColors.white),
+                ),
+              ),
+            ],
+          ),
       ],
     );
   }

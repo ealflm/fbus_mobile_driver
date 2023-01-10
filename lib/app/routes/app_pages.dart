@@ -32,6 +32,8 @@ import '../modules/select_route/bindings/select_route_binding.dart';
 import '../modules/select_route/views/select_route_view.dart';
 import '../modules/select_trip/bindings/select_trip_binding.dart';
 import '../modules/select_trip/views/select_trip_view.dart';
+import '../modules/swap/bindings/swap_binding.dart';
+import '../modules/swap/views/swap_view.dart';
 import '../modules/ticket/bindings/ticket_binding.dart';
 import '../modules/ticket/views/ticket_view.dart';
 import '../modules/ticket_detail/bindings/ticket_detail_binding.dart';
@@ -151,6 +153,12 @@ class AppPages {
       name: _Paths.ACCOUNT_DETAIL,
       page: () => const AccountDetailView(),
       binding: AccountDetailBinding(),
+      transition: Transition.noTransition,
+    ),
+    GetPage(
+      name: _Paths.SWAP,
+      page: () => const SwapView(),
+      binding: SwapBinding(),
       transition: Transition.noTransition,
     ),
   ];

@@ -17,6 +17,7 @@ import '../../../data/models/station_model.dart';
 import '../../../data/models/student_count_model.dart';
 import '../../../data/models/student_trip_model.dart';
 import '../../../data/models/trip_model.dart';
+import '../../../routes/app_pages.dart';
 import '../../home/controllers/home_ticket_data_service.dart';
 import '../../map/hyper_map_controller.dart';
 
@@ -90,9 +91,12 @@ class TicketDetailController extends BaseController {
     var studentCountsService = repository.getStudentCounts(trip?.id ?? '');
     List<StudentCount> studentCounts = [];
 
-    await callDataService(studentCountsService, onSuccess: (response) {
-      studentCounts = response;
-    });
+    await callDataService(
+      studentCountsService,
+      onSuccess: (response) {
+        studentCounts = response;
+      },
+    );
 
     Map<String, int> result = {};
 
@@ -180,6 +184,9 @@ class TicketDetailController extends BaseController {
         backgroundColor: trip.backgroundColor,
         textColor: trip.textColor,
         stationList: stationList,
+        actionButtonOnPressed: () {
+          Get.toNamed(Routes.SWAP, arguments: {'tripId': trip.id});
+        },
       ),
     );
   }

@@ -389,4 +389,22 @@ class RepositoryImpl extends BaseRepository implements Repository {
       },
     );
   }
+
+  @override
+  Future<void> requestSwap(String driverId, String tripId, String? content) {
+    var endPoint = '${DioProvider.baseUrl}/send-swap-request';
+
+    var data = {
+      'driverId': driverId,
+      'tripId': tripId,
+    };
+
+    if (content != null) {
+      data['content'] = content;
+    }
+
+    var dioCall = dioTokenClient.post(endPoint, data: data);
+
+    return callApi(dioCall);
+  }
 }

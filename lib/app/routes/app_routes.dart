@@ -22,6 +22,7 @@ abstract class Routes {
   static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
   static const QR_CODE = _Paths.QR_CODE;
   static const ACCOUNT_DETAIL = _Paths.ACCOUNT_DETAIL;
+  static const SWAP = _Paths.SWAP;
 }
 
 abstract class _Paths {
@@ -43,4 +44,5 @@ abstract class _Paths {
   static const CHANGE_PASSWORD = '/change-password';
   static const QR_CODE = '/qr-code';
   static const ACCOUNT_DETAIL = '/account-detail';
+  static const SWAP = '/swap';
 }
