@@ -160,21 +160,14 @@ class TicketDetailController extends BaseController {
   }
 
   Widget ticketItem(Trip trip) {
-    Color backgroundColor = AppColors.white;
-    Color textColor = AppColors.softBlack;
-
     if (trip.id == homeTripDataService.trip?.id) {
-      trip.title = 'Chuyến đi hiện tại';
-      backgroundColor = AppColors.green;
-      textColor = AppColors.white;
-    } else if (trip.title == 'Đã qua') {
-      backgroundColor = AppColors.caption;
-      textColor = AppColors.white;
+      trip.isCurrent = true;
     }
 
     List<Widget> stationList = [];
     for (Station station in trip.route?.stations ?? []) {
-      stationList.add(_stationItem(station));
+      stationList
+          .add(_stationItem(station, trip.backgroundColor, trip.textColor));
     }
 
     return Container(
@@ -184,14 +177,14 @@ class TicketDetailController extends BaseController {
         title: trip.title,
         trip: trip,
         state: TripItemExpandedState.more,
-        backgroundColor: backgroundColor,
-        textColor: textColor,
+        backgroundColor: trip.backgroundColor,
+        textColor: trip.textColor,
         stationList: stationList,
       ),
     );
   }
 
-  Widget _stationItem(Station station) {
+  Widget _stationItem(Station station, Color backgroundColor, Color textColor) {
     return Obx(() {
       String description = '';
       var studentNumber = studentNumberInStations[station.id];
@@ -207,15 +200,20 @@ class TicketDetailController extends BaseController {
         isSelected: station.id == selectedStationId,
         name: station.name,
         description: description,
+        backgroundColor: backgroundColor,
+        textColor: textColor,
       );
     });
   }
 
-  Widget _selectItem(
-      {Function()? onPressed,
-      bool isSelected = false,
-      String? name,
-      String? description}) {
+  Widget _selectItem({
+    Function()? onPressed,
+    bool isSelected = false,
+    String? name,
+    String? description,
+    Color backgroundColor = AppColors.white,
+    Color textColor = AppColors.softBlack,
+  }) {
     return Column(
       children: [
         Material(
@@ -234,9 +232,10 @@ class TicketDetailController extends BaseController {
                       '$name',
                       overflow: TextOverflow.ellipsis,
                       style: subtitle2.copyWith(
-                          fontWeight: isSelected
-                              ? FontWeights.medium
-                              : FontWeights.regular),
+                        fontWeight: isSelected
+                            ? FontWeights.medium
+                            : FontWeights.regular,
+                      ),
                     ),
                   ),
                   if (description != null)
@@ -248,7 +247,8 @@ class TicketDetailController extends BaseController {
                         Text(
                           description,
                           style: subtitle2.copyWith(
-                              fontWeight: FontWeights.regular),
+                            fontWeight: FontWeights.regular,
+                          ),
                         ),
                       ],
                     ),
@@ -414,7 +414,7 @@ class TicketDetailController extends BaseController {
         bounds.extend(point);
       }
 
-      bounds = MapUtils.padBottom(bounds, 0.3, 0.7);
+      bounds = MapUtils.padBottom(bounds, 0.3, 1);
 
       hyperMapController.centerZoomFitBounds(bounds);
     }

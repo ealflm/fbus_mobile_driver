@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../core/values/app_animation_assets.dart';
-import '../../../core/values/app_colors.dart';
 import '../../../core/values/text_styles.dart';
 import '../../../core/widget/trip_item.dart';
 import '../../../data/models/trip_model.dart';
@@ -110,18 +109,9 @@ class TicketController extends GetxController
   }
 
   Widget ticketItem(Trip trip) {
-    Color backgroundColor = AppColors.white;
-    Color textColor = AppColors.softBlack;
-
     if (trip.id == homeTripDataService.trip?.id) {
-      trip.title = 'Chuyến đi hiện tại';
-      backgroundColor = AppColors.green;
-      textColor = AppColors.white;
-    } else if (trip.title == 'Đã qua') {
-      backgroundColor = AppColors.caption;
-      textColor = AppColors.white;
+      trip.isCurrent = true;
     }
-
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(left: 15.w, right: 15.w),
@@ -129,8 +119,8 @@ class TicketController extends GetxController
         title: trip.title,
         trip: trip,
         state: TripItemExpandedState.less,
-        backgroundColor: backgroundColor,
-        textColor: textColor,
+        backgroundColor: trip.backgroundColor,
+        textColor: trip.textColor,
         onPressed: () {
           Get.toNamed(Routes.TICKET_DETAIL, arguments: {'trip': trip});
         },

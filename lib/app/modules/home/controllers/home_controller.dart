@@ -109,18 +109,6 @@ class HomeController extends GetxController {
   }
 
   Widget ticketItem(Trip trip) {
-    Color backgroundColor = AppColors.white;
-    Color textColor = AppColors.softBlack;
-
-    if (trip.isCurrent) {
-      trip.title = 'Chuyến đi hiện tại';
-      backgroundColor = AppColors.green;
-      textColor = AppColors.white;
-    } else if (trip.title == 'Đã qua') {
-      backgroundColor = AppColors.caption;
-      textColor = AppColors.white;
-    }
-
     return Container(
       width: double.infinity,
       padding: EdgeInsets.only(left: 15.w, right: 15.w),
@@ -128,8 +116,8 @@ class HomeController extends GetxController {
         title: trip.title,
         trip: trip,
         state: TripItemExpandedState.less,
-        backgroundColor: backgroundColor,
-        textColor: textColor,
+        backgroundColor: trip.backgroundColor,
+        textColor: trip.textColor,
         onPressed: () {
           Get.toNamed(Routes.TICKET_DETAIL, arguments: {'trip': trip});
         },

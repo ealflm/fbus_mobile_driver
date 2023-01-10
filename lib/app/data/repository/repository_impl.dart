@@ -298,7 +298,7 @@ class RepositoryImpl extends BaseRepository implements Repository {
       if (response.data['body'] != null) {
         response.data['body'].forEach((value) {
           result.add(Trip.fromJson(value));
-          result.last.title = 'Sắp tới';
+          result.last.title = 'Chuyến đi sắp tới';
         });
       }
       return result;
@@ -316,7 +316,7 @@ class RepositoryImpl extends BaseRepository implements Repository {
       if (response.data['body'] != null) {
         response.data['body'].forEach((value) {
           result.add(Trip.fromJson(value));
-          result.last.title = 'Đã qua';
+          result.last.title = 'Chuyến đi đã qua';
         });
       }
       return result;
