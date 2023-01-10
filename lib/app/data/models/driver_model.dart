@@ -17,7 +17,7 @@ class Driver {
     var photos = (json['photoUrl'] ?? '').trim().split(' ');
     photoUrl = AppSettings.get('driverPhotoUrlHost') + '/' + photos.last ?? '';
     address = json['address'];
-    status = json['status'];
+    status = int.parse((json['status'] ?? '0').toString());
   }
 
   Driver.fromJsonCapitalizeFirstLetter(Map<String, dynamic> json) {
@@ -27,7 +27,7 @@ class Driver {
     var photos = (json['PhotoUrl'] ?? '').trim().split(' ');
     photoUrl = AppSettings.get('driverPhotoUrlHost') + '/' + photos.last ?? '';
     address = json['Address'];
-    status = json['Status'];
+    status = int.parse((json['Status'] ?? '0').toString());
   }
 
   Map<String, dynamic> toJson() {

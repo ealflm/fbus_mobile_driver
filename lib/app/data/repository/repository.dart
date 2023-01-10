@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../models/driver_model.dart';
 import '../models/notification_model.dart';
@@ -75,4 +76,7 @@ abstract class Repository {
 
   // Send swap request
   Future<void> requestSwap(String driverId, String tripId, String? content);
+
+  // Send location
+  Future<void> sendLocation(String driverId, LatLng? location);
 }

@@ -7,6 +7,7 @@ import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 import 'bindings/initial_binding.dart';
 import 'core/utils/auth_service.dart';
 import 'core/utils/notification_service.dart';
+import 'core/utils/tracking_location_service.dart';
 import 'core/values/app_colors.dart';
 import 'routes/app_pages.dart';
 
@@ -24,6 +25,7 @@ class _AppState extends State<App> {
     if (AuthService.token != null) {
       initialRoute = Routes.MAIN;
       NotificationService.registerNotification();
+      TrackingLocationService.init();
     }
 
     return ScreenUtilInit(

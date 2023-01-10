@@ -10,6 +10,7 @@ import '../../routes/app_pages.dart';
 import '../base/base_controller.dart';
 import '../widget/hyper_dialog.dart';
 import 'notification_service.dart';
+import 'tracking_location_service.dart';
 
 class AuthService extends BaseController {
   static final AuthService _instance = AuthService._internal();
@@ -92,6 +93,7 @@ class AuthService extends BaseController {
         token = response;
         debugPrint('Logged in with token: $token');
         NotificationService.registerNotification();
+        TrackingLocationService.init();
       },
       onError: (exception) {
         HyperDialog.show(
@@ -115,6 +117,7 @@ class AuthService extends BaseController {
 
   static Future<void> logout() async {
     NotificationService.unregisterNotification();
+    TrackingLocationService.stop();
     clearToken();
     Get.offAllNamed(Routes.LOGIN);
   }

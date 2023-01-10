@@ -407,4 +407,23 @@ class RepositoryImpl extends BaseRepository implements Repository {
 
     return callApi(dioCall);
   }
+
+  @override
+  Future<void> sendLocation(String driverId, LatLng? location) {
+    var endPoint = '${DioProvider.baseUrl}/tracking-location';
+
+    if (location == null) {
+      return Future.error('Not found location');
+    }
+
+    var data = {
+      'driverId': driverId,
+      'latitude': location.latitude,
+      'longitude': location.longitude,
+    };
+
+    var dioCall = dioTokenClient.post(endPoint, data: data);
+
+    return callApi(dioCall);
+  }
 }
