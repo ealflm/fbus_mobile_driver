@@ -155,26 +155,33 @@ class HomeView extends GetView<HomeController> {
                                     _mainButton(
                                       text: 'Lịch trình',
                                       icon: Icons.insert_invitation,
-                                      iconColor: AppColors.purple,
-                                      onPressed: null,
-                                      // () {
-                                      // Get.toNamed(Routes.BOOKING);
-                                      // },
-                                    ),
-                                    _mainButton(
-                                      text: 'Đặt lịch',
-                                      icon: Icons.pending_actions,
-                                      iconColor: AppColors.blue,
+                                      iconColor: AppColors.hardBlue,
                                       onPressed: () {
-                                        Get.toNamed(Routes.SELECT_ROUTE);
+                                        Get.offAllNamed(
+                                          Routes.MAIN,
+                                          arguments: {'tabIndex': 1},
+                                        );
                                       },
                                     ),
                                     _mainButton(
-                                      text: 'Quét QR',
-                                      icon: Icons.qr_code_scanner,
-                                      iconColor: AppColors.green,
+                                      text: 'Đổi chuyến',
+                                      icon: Icons.sync,
+                                      iconColor: AppColors.yellow,
                                       onPressed: () {
-                                        Get.toNamed(Routes.SCAN);
+                                        Get.offAllNamed(
+                                          Routes.MAIN,
+                                          arguments: {'tabIndex': 1},
+                                        );
+                                        showToast(
+                                            'Vui lòng chọn chuyến đi muốn đổi');
+                                      },
+                                    ),
+                                    _mainButton(
+                                      text: 'Tạo QR',
+                                      icon: Icons.qr_code_scanner,
+                                      iconColor: AppColors.hardBlue,
+                                      onPressed: () {
+                                        Get.toNamed(Routes.QR_CODE);
                                       },
                                     ),
                                   ],
@@ -187,36 +194,34 @@ class HomeView extends GetView<HomeController> {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     _mainButton(
-                                      text: 'Đánh giá',
-                                      icon: Icons.thumb_up_alt_outlined,
-                                      iconColor: AppColors.yellow,
+                                      text: 'Tài khoản',
+                                      icon: Icons.person_outlined,
+                                      iconColor: AppColors.purple,
                                       onPressed: () {
                                         Get.offAllNamed(
                                           Routes.MAIN,
-                                          arguments: {'tabIndex': 1},
+                                          arguments: {'tabIndex': 3},
                                         );
-                                        showToast(
-                                            'Vui lòng chọn chuyến đi muốn đánh giá');
                                       },
                                     ),
                                     _mainButton(
-                                      text: 'Bản đồ',
-                                      icon: Icons.map_outlined,
-                                      iconColor: AppColors.red,
+                                      text: 'Đổi mã PIN',
+                                      icon: Icons.pin_outlined,
+                                      iconColor: AppColors.blue,
+                                      onPressed: () {
+                                        Get.toNamed(Routes.CHANGE_PASSWORD);
+                                      },
                                     ),
                                     _mainButton(
-                                      text: 'Lịch trình',
-                                      icon: Icons.insert_invitation,
-                                      iconColor: AppColors.hardBlue,
+                                      text: 'Điểm danh',
+                                      icon: Icons.check_circle_outline,
+                                      iconColor: AppColors.green,
                                       onPressed: () {
-                                        Get.offAllNamed(
-                                          Routes.MAIN,
-                                          arguments: {'tabIndex': 1},
-                                        );
+                                        Get.toNamed(Routes.SCAN);
                                       },
                                     ),
                                   ],
-                                )
+                                ),
                               ],
                             ),
                           ),
