@@ -1,3 +1,4 @@
+import 'package:fbus_mobile_driver/app/core/base/base_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,7 @@ import '../../../core/values/font_weights.dart';
 import '../../../core/values/text_styles.dart';
 import '../../home/controllers/home_ticket_data_service.dart';
 
-class QrCodeController extends GetxController {
+class QrCodeController extends BaseController {
   HomeTripDataService homeTripDataService = Get.find<HomeTripDataService>();
 
   final Rx<String?> _qrData = Rx<String?>(null);
@@ -25,9 +26,13 @@ class QrCodeController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onReady() {
+    fetch();
+    super.onReady();
+  }
+
+  void fetch() {
     fetchQRData();
-    super.onInit();
   }
 
   Widget qrImage() {
@@ -59,10 +64,14 @@ class QrCodeController extends GetxController {
 
   Future<void> fetchQRData() async {
     isLoading = true;
-    // TODO: Replace qrData
-    await Future.delayed(const Duration(seconds: 2));
-    qrData =
-        'hellofromhyperhellofromhyperhellofromhyperhellofromhyperhellofromhyper';
+    await homeTripDataService.fetch();
+    String tripId = homeTripDataService.trip?.id ?? '';
+    int currentTicket = homeTripDataService.trip?.currentTicket ?? 0;
+    var encodeQRService = repository.encodeQR('${tripId}_${currentTicket + 1}');
+
+    await callDataService(encodeQRService, onSuccess: (response) {
+      qrData = '[CHI]$response';
+    });
     isLoading = false;
   }
 }

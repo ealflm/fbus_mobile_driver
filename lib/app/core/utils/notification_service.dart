@@ -7,6 +7,7 @@ import '../../data/repository/repository.dart';
 import '../../modules/home/controllers/home_ticket_data_service.dart';
 import '../../modules/home/controllers/statistic_data_service.dart';
 import '../../modules/notification/controllers/notification_controller.dart';
+import '../../modules/qr_code/controllers/qr_code_controller.dart';
 import '../../modules/ticket/controllers/ticket_controller.dart';
 import 'auth_service.dart';
 
@@ -70,8 +71,9 @@ class NotificationService {
   static void reloadData() {
     Get.find<NotificationController>().fetchNotifications();
     Get.find<TicketController>().tripDataService.fetch();
-    Get.find<HomeTripDataService>().fetchTrip();
+    Get.find<HomeTripDataService>().fetch();
     Get.find<StatisticDataService>().fetch();
+    Get.find<QrCodeController>().fetch();
   }
 
   // ignore: unused_element

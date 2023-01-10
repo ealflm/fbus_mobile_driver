@@ -42,9 +42,6 @@ abstract class Repository {
   /// Get current Ticket
   Future<Statistic> getStatistic(String driverId);
 
-  // Check in
-  Future<void> checkin(String driverId, String code);
-
   // Feedback a trip by studenTripId
   Future<void> feedback(String studentTripId, double rate, String message);
 
@@ -69,4 +66,10 @@ abstract class Repository {
 
   // Update driver profile
   Future<void> updateProfile(Driver driver, MultipartFile? image);
+
+  // Check in
+  Future<void> checkIn(String qrCode, String driverId);
+
+  // encryptString
+  Future<String> encodeQR(String content);
 }

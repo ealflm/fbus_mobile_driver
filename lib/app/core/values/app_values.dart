@@ -8,5 +8,5 @@ abstract class AppValues {
   static const double focusZoomLevel = 15;
 
   // QR CODE
-  static const String checkinQRPrefix = '[CHI]';
+  static const String checkinQRPrefix = '[DCH]';
 }

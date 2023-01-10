@@ -247,26 +247,6 @@ class RepositoryImpl extends BaseRepository implements Repository {
   }
 
   @override
-  Future<void> checkin(String driverId, String code) {
-    var endPoint = '${DioProvider.baseUrl}/student-trip/checkin';
-
-    var data = {
-      'qrCode': code,
-      'studentID': driverId,
-    };
-
-    var dioCall = dioTokenClient.patch(endPoint, data: data);
-
-    try {
-      return callApi(dioCall).then(
-        (response) {},
-      );
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  @override
   Future<void> feedback(String studentTripId, double rate, String message) {
     var endPoint =
         '${DioProvider.baseUrl}/student-trip/feedback/$studentTripId';
@@ -383,5 +363,30 @@ class RepositoryImpl extends BaseRepository implements Repository {
     var dioCall = dioTokenClient.put(endpoint, data: formData);
 
     return callApi(dioCall);
+  }
+
+  @override
+  Future<void> checkIn(String qrCode, String driverId) {
+    var endpoint = '${DioProvider.baseUrl}/trip/checkin';
+    var data = {
+      'qrCode': qrCode,
+      'driverId': driverId,
+    };
+    var dioCall = dioTokenClient.patch(endpoint, data: data);
+
+    return callApi(dioCall);
+  }
+
+  @override
+  Future<String> encodeQR(String content) {
+    var endPoint = '${DioProvider.baseUrl}/encryptString/$content';
+
+    var dioCall = dioTokenClient.get(endPoint);
+
+    return callApi(dioCall).then(
+      (response) {
+        return response.data['body'];
+      },
+    );
   }
 }

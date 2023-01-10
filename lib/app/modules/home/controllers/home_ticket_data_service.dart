@@ -19,11 +19,11 @@ class HomeTripDataService extends BaseController {
 
   @override
   void onInit() {
-    fetchTrip();
+    fetch();
     super.onInit();
   }
 
-  Future<void> fetchTrip() async {
+  Future<void> fetch() async {
     isLoading = true;
     String driverId = AuthService.driver?.id ?? '';
     var fetchTripService = repository.getCurrentTrip(driverId);

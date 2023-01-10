@@ -29,8 +29,8 @@ class ScanController extends BaseController {
           var code = data.substring(AppValues.checkinQRPrefix.length);
           qrController?.pauseCamera();
           HyperDialog.show(
-            title: 'Liên kết thẻ',
-            content: 'Bạn có chắc chắn muốn checkin lên xe này không?',
+            title: 'Xác nhận',
+            content: 'Bạn có chắc chắn muốn điểm danh lên xe?',
             primaryButtonText: 'Đồng ý',
             secondaryButtonText: 'Huỷ',
             primaryOnPressed: () async {
@@ -38,28 +38,21 @@ class ScanController extends BaseController {
               bool isSuccess = await checkin(code);
 
               if (isSuccess) {
+                Get.back();
                 HyperDialog.showSuccess(
                   title: 'Thành công',
-                  content: 'Đặt vé thành công!',
+                  content: 'Điểm danh thành công',
                   barrierDismissible: false,
-                  primaryButtonText: 'Trở về trang chủ',
-                  secondaryButtonText: 'Tiếp tục đặt',
-                  primaryOnPressed: () {
-                    Get.offAllNamed(Routes.MAIN);
-                  },
-                  secondaryOnPressed: () async {
-                    await qrController?.resumeCamera();
-                    Get.back();
-                  },
+                  primaryButtonText: 'OK',
                 );
               } else {
                 HyperDialog.showFail(
                   title: 'Thất bại',
                   content:
-                      'Không tìm thấy vé xe cho chuyến đi này. Vui lòng đến đúng thời gian và địa điểm ghi trên vé để checkin.',
+                      'Đã có lỗi xảy ra khi điểm danh lên xe. Vui lòng thử lại!',
                   barrierDismissible: false,
                   primaryButtonText: 'Trở về trang chủ',
-                  secondaryButtonText: 'Tiếp tục đặt',
+                  secondaryButtonText: 'Tiếp tục',
                   primaryOnPressed: () {
                     Get.offAllNamed(Routes.MAIN);
                   },
@@ -94,10 +87,10 @@ class ScanController extends BaseController {
   Future<bool> checkin(String code) async {
     String driverId = AuthService.driver?.id ?? '';
     bool result = false;
-    var checkinService = repository.checkin(driverId, code);
+    var checkInService = repository.checkIn(code, driverId);
 
     await callDataService(
-      checkinService,
+      checkInService,
       onSuccess: (response) {
         result = true;
       },

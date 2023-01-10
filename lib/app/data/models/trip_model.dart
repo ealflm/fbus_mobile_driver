@@ -19,6 +19,7 @@ class Trip {
   num? rate;
   String? _title;
   bool isCurrent = false;
+  int? currentTicket;
 
   set title(String? value) {
     _title = value;
@@ -114,5 +115,6 @@ class Trip {
     timeEnd = parseDuration(json['timeEnd']);
     status = json['status'];
     rate = json['rate'];
+    currentTicket = json['currentTicket'];
   }
 }
