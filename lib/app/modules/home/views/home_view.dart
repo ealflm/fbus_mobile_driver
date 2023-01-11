@@ -229,9 +229,12 @@ class HomeView extends GetView<HomeController> {
                                       icon: Icons.check_circle_outline,
                                       iconColor: AppColors.green,
                                       onPressed: () {
-                                        if (controller
-                                                .tripDataService.trip?.title ==
-                                            'Đang diễn ra') {
+                                        if (controller.tripDataService.trip
+                                                    ?.title ==
+                                                'Đang diễn ra' ||
+                                            controller.tripDataService.trip
+                                                    ?.title ==
+                                                'Chưa điểm danh') {
                                           Get.toNamed(Routes.SCAN);
                                         } else {
                                           HyperDialog.show(
