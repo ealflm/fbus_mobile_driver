@@ -45,8 +45,8 @@ class TripDataService extends BaseController {
       onSuccess: (List<Trip> response) {
         futureTrips = response;
         futureTrips?.sort((a, b) {
-          if (a.date == null || b.date == null) return -1;
-          return a.date!.compareTo(b.date!);
+          if (a.startDate == null || b.startDate == null) return -1;
+          return a.startDate!.compareTo(b.startDate!);
         });
       },
       onError: (exception) {},
@@ -62,8 +62,8 @@ class TripDataService extends BaseController {
       onSuccess: (List<Trip> response) {
         pastTrips = response;
         pastTrips?.sort((b, a) {
-          if (a.date == null || b.date == null) return -1;
-          return a.date!.compareTo(b.date!);
+          if (a.startDate == null || b.startDate == null) return -1;
+          return a.startDate!.compareTo(b.startDate!);
         });
       },
       onError: (exception) {},
