@@ -36,7 +36,8 @@ class MainView extends GetView<MainController> {
             onPressed: () {
               HomeTripDataService homeTripDataService =
                   Get.find<HomeTripDataService>();
-              if (homeTripDataService.trip?.title == 'Đang diễn ra') {
+              if (homeTripDataService.trip?.title == 'Đang diễn ra' ||
+                  homeTripDataService.trip?.title == 'Chưa điểm danh') {
                 Get.toNamed(Routes.QR_CODE);
               } else {
                 HyperDialog.show(
