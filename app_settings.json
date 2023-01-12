@@ -2,7 +2,7 @@
   "baseUrl": "https://fbus-api.azurewebsites.net/api/v1.0/driver",
   "mapboxUrlTemplate": "https://api.mapbox.com/styles/v1/namdpse140834/cl6a3eox5001814n736w7m7nz/tiles/256/{z}/{x}/{y}@2x?access_token={access_token}",
   "mapboxAccessToken": "pk.eyJ1IjoibmFtZHBzZTE0MDgzNCIsImEiOiJjbDZhM2MzOW4xOWFuM2tud3Ezd3dzejk5In0.HVgi6OB6u0WBPlg-F-shag",
-  "goongAPIKey": "W205TZuNeEauosjaHGKnAAtUxCjdJCmfe8YsY79Z",
+  "goongAPIKey": "JrK0pKm6AAnr5FfutNbie3c0UwWRPcg6m3GiN9Ly",
   "studentPhotoUrlHost": "https://fbusstorage.blob.core.windows.net/student",
   "driverPhotoUrlHost": "https://fbusstorage.blob.core.windows.net/driver",
   "maxDayTicketBooking": 15
