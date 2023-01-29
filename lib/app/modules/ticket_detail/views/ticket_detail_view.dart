@@ -4,9 +4,9 @@ import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-import 'package:hyper_app_settings/hyper_app_settings.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../../core/utils/hyper_app_settings.dart';
 import '../../../core/values/app_colors.dart';
 import '../../../core/widget/status_bar.dart';
 import '../controllers/ticket_detail_controller.dart';

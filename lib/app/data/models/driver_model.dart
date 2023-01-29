@@ -1,4 +1,4 @@
-import 'package:hyper_app_settings/hyper_app_settings.dart';
+import '../../core/utils/hyper_app_settings.dart';
 
 class Driver {
   String? id;

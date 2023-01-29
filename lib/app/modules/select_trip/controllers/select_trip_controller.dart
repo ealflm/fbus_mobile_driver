@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hyper_app_settings/hyper_app_settings.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../core/base/base_controller.dart';
 import '../../../core/utils/auth_service.dart';
+import '../../../core/utils/hyper_app_settings.dart';
 import '../../../core/values/app_animation_assets.dart';
 import '../../../core/values/app_colors.dart';
 import '../../../core/values/text_styles.dart';

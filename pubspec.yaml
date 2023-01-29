@@ -24,13 +24,12 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   font_awesome_flutter: ^9.2.0
   fluttertoast: ^8.0.8
-  hyper_app_settings: ^0.0.1
   jwt_decode: ^0.3.1
 
-  firebase_auth: ^4.1.4
-  firebase_core: ^2.3.0
-  google_sign_in: ^5.4.2
-  firebase_messaging: ^14.1.2
+  firebase_auth: ^4.2.5
+  firebase_core: ^2.4.1
+  google_sign_in: ^5.4.4
+  firebase_messaging: ^14.2.1
   flutter_local_notifications: ^12.0.4
 
   flutter_map: ^3.0.0
