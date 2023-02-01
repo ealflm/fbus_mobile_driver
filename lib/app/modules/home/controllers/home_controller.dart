@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../../core/values/app_animation_assets.dart';
 import '../../../core/values/app_colors.dart';
@@ -14,8 +15,16 @@ import 'home_ticket_data_service.dart';
 import 'statistic_data_service.dart';
 
 class HomeController extends GetxController {
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
   HomeTripDataService tripDataService = Get.find<HomeTripDataService>();
   StatisticDataService statisticDataService = Get.find<StatisticDataService>();
+
+  Future<void> onRefresh() async {
+    await Get.find<HomeTripDataService>().fetch();
+    await Get.find<StatisticDataService>().fetch();
+  }
 
   Widget statistic() {
     return Obx(
@@ -83,6 +92,20 @@ class HomeController extends GetxController {
   Widget currentTicket() {
     return Obx(
       () {
+        if (tripDataService.isLoading) {
+          return Center(
+            child: Column(
+              children: [
+                Shimmer.fromColors(
+                  baseColor: AppColors.shimmerBaseColor,
+                  highlightColor: AppColors.shimmerHighlightColor,
+                  child: ticketItem(Trip()),
+                ),
+                SizedBox(height: 15.h),
+              ],
+            ),
+          );
+        }
         if (tripDataService.isLoading) {
           return Center(
             child: Column(

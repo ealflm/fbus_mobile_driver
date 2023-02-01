@@ -22,6 +22,8 @@ class Trip {
   bool isCurrent = false;
   int? currentTicket;
 
+  Trip();
+
   set title(String? value) {
     _title = value;
   }
