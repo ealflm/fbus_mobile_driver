@@ -39,6 +39,7 @@ class ScanController extends BaseController {
 
               if (isSuccess) {
                 Get.back();
+                Get.toNamed(Routes.QR_CODE);
                 HyperDialog.showSuccess(
                   title: 'Thành công',
                   content: 'Điểm danh thành công',
