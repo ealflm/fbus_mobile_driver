@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lottie/lottie.dart';
+import 'package:shimmer/shimmer.dart';
 
-import '../../../core/values/app_animation_assets.dart';
+import '../../../core/values/app_colors.dart';
 import '../../../core/values/text_styles.dart';
 import '../../../core/widget/trip_item.dart';
 import '../../../data/models/trip_model.dart';
@@ -47,26 +47,32 @@ class TicketController extends GetxController
   Widget pastTickets() {
     return Obx(
       () {
-        if (tripDataService.isLoading) {
-          return Center(
-            child: Lottie.asset(
-              AppAnimationAssets.loading,
-              height: 100.r,
-            ),
-          );
-        }
-
         List<Widget> trips = [];
 
-        for (Trip trip in tripDataService.pastTrips ?? []) {
-          trips.add(ticketItem(trip));
-          trips.add(SizedBox(
-            height: 10.h,
-          ));
-        }
+        if (tripDataService.isLoading) {
+          for (int i = 0; i < 7; i++) {
+            trips.add(
+              Shimmer.fromColors(
+                baseColor: AppColors.shimmerBaseColor,
+                highlightColor: AppColors.shimmerHighlightColor,
+                child: ticketItem(Trip()),
+              ),
+            );
+            trips.add(SizedBox(
+              height: 10.h,
+            ));
+          }
+        } else {
+          for (Trip trip in tripDataService.pastTrips ?? []) {
+            trips.add(ticketItem(trip));
+            trips.add(SizedBox(
+              height: 10.h,
+            ));
+          }
 
-        if (trips.isEmpty) {
-          return Center(child: Text('Không có chuyến đi', style: body2));
+          if (trips.isEmpty) {
+            return Center(child: Text('Không có chuyến đi', style: body2));
+          }
         }
 
         return Column(
@@ -79,26 +85,32 @@ class TicketController extends GetxController
   Widget futureTickets() {
     return Obx(
       () {
-        if (tripDataService.isLoading) {
-          return Center(
-            child: Lottie.asset(
-              AppAnimationAssets.loading,
-              height: 100.r,
-            ),
-          );
-        }
-
         List<Widget> trips = [];
 
-        for (Trip trip in tripDataService.futureTrips ?? []) {
-          trips.add(ticketItem(trip));
-          trips.add(SizedBox(
-            height: 10.h,
-          ));
-        }
+        if (tripDataService.isLoading) {
+          for (int i = 0; i < 7; i++) {
+            trips.add(
+              Shimmer.fromColors(
+                baseColor: AppColors.shimmerBaseColor,
+                highlightColor: AppColors.shimmerHighlightColor,
+                child: ticketItem(Trip()),
+              ),
+            );
+            trips.add(SizedBox(
+              height: 10.h,
+            ));
+          }
+        } else {
+          for (Trip trip in tripDataService.futureTrips ?? []) {
+            trips.add(ticketItem(trip));
+            trips.add(SizedBox(
+              height: 10.h,
+            ));
+          }
 
-        if (trips.isEmpty) {
-          return Center(child: Text('Không có chuyến đi', style: body2));
+          if (trips.isEmpty) {
+            return Center(child: Text('Không có chuyến đi', style: body2));
+          }
         }
 
         return Column(
@@ -122,7 +134,9 @@ class TicketController extends GetxController
         backgroundColor: trip.backgroundColor,
         textColor: trip.textColor,
         onPressed: () {
-          Get.toNamed(Routes.TICKET_DETAIL, arguments: {'trip': trip});
+          if (trip.id != null) {
+            Get.toNamed(Routes.TICKET_DETAIL, arguments: {'trip': trip});
+          }
         },
       ),
     );

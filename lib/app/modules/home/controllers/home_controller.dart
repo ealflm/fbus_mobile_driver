@@ -142,7 +142,9 @@ class HomeController extends GetxController {
         backgroundColor: trip.backgroundColor,
         textColor: trip.textColor,
         onPressed: () {
-          Get.toNamed(Routes.TICKET_DETAIL, arguments: {'trip': trip});
+          if (trip.id != null) {
+            Get.toNamed(Routes.TICKET_DETAIL, arguments: {'trip': trip});
+          }
         },
       ),
     );

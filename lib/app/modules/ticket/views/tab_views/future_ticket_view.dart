@@ -9,16 +9,21 @@ class FutureTicketView extends GetView<TicketController> {
   const FutureTicketView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5.w),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 10.h,
-            ),
-            controller.futureTickets(),
-          ],
+    return RefreshIndicator(
+      onRefresh: () async {
+        await controller.tripDataService.fetch();
+      },
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 5.w),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 10.h,
+              ),
+              controller.futureTickets(),
+            ],
+          ),
         ),
       ),
     );

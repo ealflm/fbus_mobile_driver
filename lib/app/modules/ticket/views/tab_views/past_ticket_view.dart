@@ -9,16 +9,21 @@ class PastTicketView extends GetView<TicketController> {
   const PastTicketView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5.w),
-        child: Column(
-          children: [
-            SizedBox(
-              height: 10.h,
-            ),
-            controller.pastTickets(),
-          ],
+    return RefreshIndicator(
+      onRefresh: () async {
+        await controller.tripDataService.fetch();
+      },
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 5.w),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 10.h,
+              ),
+              controller.pastTickets(),
+            ],
+          ),
         ),
       ),
     );
