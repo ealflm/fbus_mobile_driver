@@ -1,8 +1,8 @@
 {
   "baseUrl": "https://fbus-api.azurewebsites.net/api/v1.0/driver",
-  "mapboxUrlTemplate": "https://api.mapbox.com/styles/v1/namdpse140834/cl6a3eox5001814n736w7m7nz/tiles/256/{z}/{x}/{y}@2x?access_token={access_token}",
-  "mapboxAccessToken": "pk.eyJ1IjoibmFtZHBzZTE0MDgzNCIsImEiOiJjbDZhM2MzOW4xOWFuM2tud3Ezd3dzejk5In0.HVgi6OB6u0WBPlg-F-shag",
-  "goongAPIKey": "JrK0pKm6AAnr5FfutNbie3c0UwWRPcg6m3GiN9Ly",
+  "mapboxUrlTemplate": "https://api.mapbox.com/styles/v1/letrongthang131000/cldq08mfn005601mexsbrx226/tiles/256/{z}/{x}/{y}@2x?access_token={access_token}",
+  "mapboxAccessToken": "pk.eyJ1IjoibGV0cm9uZ3RoYW5nMTMxMDAwIiwiYSI6ImNsODdjMDN4aDBiY3M0MHJ3c3FydzZnM2gifQ.lzb2BAjXcUeDiXYaz6N3pg",
+  "goongAPIKey": "0jinUtP9CvhsHKkMjXTp68RSu8uI1XkzyY01nk1Y",
   "studentPhotoUrlHost": "https://fbusstorage.blob.core.windows.net/student",
   "driverPhotoUrlHost": "https://fbusstorage.blob.core.windows.net/driver",
   "maxDayTicketBooking": 15
